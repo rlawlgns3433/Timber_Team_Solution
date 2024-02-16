@@ -1,7 +1,14 @@
 #pragma once
+class SpriteGo;
+class TextGo;
+
 class SceneSelectCharacter : public Scene
 {
 protected :
+	SpriteGo* spriteGoBackground;
+	SpriteGo* spritePlayer1;
+	SpriteGo* spritePlayer2;
+	TextGo* SelectText;
 
 public :
 	SceneSelectCharacter(SceneIDs id);

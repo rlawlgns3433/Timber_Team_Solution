@@ -44,6 +44,8 @@ public:
 	// TEST
 	void SetPlayerOneSelect(int sel) { this->playeroneSelect = sel; }
 	int GetPlayerOneSelect() { return this->playeroneSelect; }
+	void SetPlayerTwoSelect(int sel) { this->playertwoSelect = sel; }
+	int GetPlayerTwoSelect() { return this->playertwoSelect; }
 };
 
 #define SCENEMANAGER (Singleton<SceneManager>::Instance())
