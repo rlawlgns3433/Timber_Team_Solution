@@ -26,13 +26,13 @@ void SceneSelectCharacter::Init()
 	SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.5, FRAMEWORK.GetWindowSize().y * 0.2);
 	AddGameObject(SelectText);
 
-	spritePlayer1 = new SpriteGo("plater1");
+	spritePlayer1 = new SpriteGo("player1");
 	spritePlayer1->SetTexture(*textureManager.GetResource("graphics/player.png"));
 	spritePlayer1->SetOrigin(Origins::BC);
 	spritePlayer1->SetPosition({1920*0.3,1080*0.7});
 	AddGameObject(spritePlayer1);
 
-	spritePlayer2 = new SpriteGo("plater2");                                     
+	spritePlayer2 = new SpriteGo("player2");                                     
 	spritePlayer2->SetTexture(*textureManager.GetResource("graphics/player2.png"));
 	spritePlayer2->SetOrigin(Origins::BC);
 	spritePlayer2->SetPosition({ 1920 * 0.7,1080 * 0.7 });
