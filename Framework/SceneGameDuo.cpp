@@ -140,6 +140,26 @@ void SceneGameDuo::UpdateAwake(float dt)
 		SetStatus(Status::Game);
 		SCENEMANAGER.PlayBGM();
 	}
+
+	switch (SCENEMANAGER.GetPlayerOneSelect())
+	{
+	case 1:
+		player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+		break;
+	case 2:
+		player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+		break;
+	}
+
+	switch (SCENEMANAGER.GetPlayerTwoSelect())
+	{
+	case 1:
+		player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+		break;
+	case 2:
+		player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+		break;
+	}
 }
 
 // TODO : player2에 대한 Action도 모두 추가
