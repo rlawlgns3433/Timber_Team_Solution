@@ -62,16 +62,12 @@ public:
 	// TEST
 	void SetPlayerOneSelect(int sel) { this->playeroneSelect = sel; }
 	int GetPlayerOneSelect() { return this->playeroneSelect; }
-<<<<<<< HEAD
 	void SetPlayerTwoSelect(int sel) { this->playertwoSelect = sel; }
 	int GetPlayerTwoSelect() { return this->playertwoSelect; }
-=======
 	void LoadAllResources();
 	void PlayBGM();
 	void PauseBGM();
 	void StopBGM();
-
->>>>>>> 868c044b8553db741a13f853ece8b7829ba856c6
 };
 
 #define SCENEMANAGER (Singleton<SceneManager>::Instance())
