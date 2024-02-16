@@ -57,6 +57,18 @@ void SceneManager::Draw(sf::RenderWindow& window)
 	scenes[(int)currentScene]->Draw(window);
 }
 
+void SceneManager::SetMode(Mod mod)
+{
+	if (mod == Mod::SINGLE)
+	{
+		isSingleMode = true;
+	}
+	else
+	{
+		isSingleMode = false;
+	}
+}
+
 void SceneManager::LoadAllResources()
 {
 	// Texture

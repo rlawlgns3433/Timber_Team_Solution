@@ -73,14 +73,14 @@ void SceneSelectMode::Update(float dt)
 	if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 	{
 		SCENEMANAGER.StopBGM();
-		//TO-Do : 어떠한 모드 선택했다는 것 selectCharacter씬에 알려줄 수 있는 함수 SceneManager에 bool형으로 만들기
+		SCENEMANAGER.SetMode(SceneManager::Mod::SINGLE);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
 	}
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 	{
 		SCENEMANAGER.StopBGM();
-
+		SCENEMANAGER.SetMode(SceneManager::Mod::DUO);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
 	}
 }

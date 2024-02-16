@@ -45,7 +45,17 @@ protected:
 	int playeroneSelect = 0;
 	int playertwoSelect = 0;
 
+	bool isSingleMode = true;
+
 public:
+
+	enum class Mod
+	{
+		NONE = -1,
+		SINGLE,
+		DUO,
+		COUNT,
+	};
 
 	SceneManager() = default;
 	virtual ~SceneManager();
@@ -64,6 +74,10 @@ public:
 	int GetPlayerOneSelect() { return this->playeroneSelect; }
 	void SetPlayerTwoSelect(int sel) { this->playertwoSelect = sel; }
 	int GetPlayerTwoSelect() { return this->playertwoSelect; }
+
+	void SetMode(Mod mod);
+	bool GetMode() { return isSingleMode; }
+
 	void LoadAllResources();
 	void PlayBGM();
 	void PauseBGM();
