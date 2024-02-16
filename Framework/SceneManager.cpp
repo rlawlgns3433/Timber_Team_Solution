@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "SceneManager.h"
-#include "SceneDev1.h"
-#include "SceneDev2.h"
-#include "SceneGame.h"
+#include "SceneTitle.h"
+#include "SceneSelectCharacter.h"
+#include "SceneSelectMode.h"
+#include "SceneGameSingle.h"
+#include "SceneGameDuo.h"
 
 SceneManager::~SceneManager()
 {
@@ -12,11 +14,13 @@ SceneManager::~SceneManager()
 void SceneManager::Init()
 {
 	Release();
+	LoadAllResources();
+	scenes.push_back(new SceneTitle(SceneIDs::SceneTitle));
+	scenes.push_back(new SceneSelectMode(SceneIDs::SceneSelectMode));
+	scenes.push_back(new SceneSelectCharacter(SceneIDs::SceneSelectCharacter));
+	scenes.push_back(new SceneGameSingle(SceneIDs::SceneGameSingle));
+	scenes.push_back(new SceneGameDuo(SceneIDs::SceneGameDuo));
 
-	scenes.push_back(new SceneDev1(SceneIDs::SceneDev1));
-	scenes.push_back(new SceneDev2(SceneIDs::SceneDev2));
-	scenes.push_back(new SceneGame(SceneIDs::SceneGame));
-	
 	for (auto scene : scenes)
 	{
 		scene->Init();
@@ -51,4 +55,49 @@ void SceneManager::Update(float dt)
 void SceneManager::Draw(sf::RenderWindow& window)
 {
 	scenes[(int)currentScene]->Draw(window);
+}
+
+void SceneManager::SetMode(Mod mod)
+{
+	currentMode = mod;
+}
+
+void SceneManager::LoadAllResources()
+{
+	// Texture
+	TEXTURE_MANAGER.Load("graphics/background.png");
+	TEXTURE_MANAGER.Load("graphics/cloud.png");
+	TEXTURE_MANAGER.Load("graphics/bee.png");
+	TEXTURE_MANAGER.Load("graphics/tree.png");
+	TEXTURE_MANAGER.Load("graphics/branch.png");
+	TEXTURE_MANAGER.Load("graphics/log.png");
+	TEXTURE_MANAGER.Load("graphics/player.png");
+	TEXTURE_MANAGER.Load("graphics/player2.png");
+	TEXTURE_MANAGER.Load("graphics/rip.png");
+	TEXTURE_MANAGER.Load("graphics/axe.png");
+
+	// Font
+	FONT_MANAGER.Load("fonts/KOMIKAP_.ttf");
+
+	// Sound, Music
+	SOUND_MANAGER.Load("sound/chop.wav");
+	SOUND_MANAGER.Load("sound/death.wav");
+	SOUND_MANAGER.Load("sound/out_of_time.wav");
+
+	bgm.openFromFile(bgmId);
+}
+
+void SceneManager::PlayBGM()
+{
+	bgm.play();
+}
+
+void SceneManager::PauseBGM()
+{
+	bgm.pause();
+}
+
+void SceneManager::StopBGM()
+{
+	bgm.stop();
 }

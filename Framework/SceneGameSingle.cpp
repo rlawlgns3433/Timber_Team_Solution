@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "SceneGame.h"
+#include "SceneGameSingle.h"
 #include "SpriteGo.h"
 #include "BackgroundCloudGo.h"
 #include "BackgroundBeeGo.h"
@@ -10,42 +10,19 @@
 #include "EffectLog.h"
 #include "PlayerGo.h"
 
-SceneGame::SceneGame(SceneIDs id) 
+SceneGameSingle::SceneGameSingle(SceneIDs id) 
 	: Scene(id)
 {
 }
 
-SceneGame::~SceneGame()
+SceneGameSingle::~SceneGameSingle()
 {
 }
 
-void SceneGame::Init()
+void SceneGameSingle::Init()
 {
-	// Texture
-	textureManager.Load(backgroundId);
-	textureManager.Load(cloudId);
-	textureManager.Load(beeId);
-	textureManager.Load(treeId);
-	textureManager.Load(branchId);
-	textureManager.Load(logId);
-	textureManager.Load(playerId);
-	textureManager.Load(ripId);
-	textureManager.Load(axeId);
-
-	// Font
-	fontManager.Load(fontId);
-
-	// Sound, Music
-	soundManager.Load(chopId);
-	soundManager.Load(deathId);
-	soundManager.Load(outOfTimeId);
-
-	// TODO : 게임 진행 시에만 재생되도록 변경 필요!
-	bgm.openFromFile(bgmId);
-	bgm.play();
-
 	SpriteGo* spriteGoBackground = new SpriteGo("background");
-	spriteGoBackground->SetTexture(*textureManager.GetResource(backgroundId));
+	spriteGoBackground->SetTexture(*textureManager.GetResource("graphics/background.png"));
 	AddGameObject(spriteGoBackground);
 
 	sf::FloatRect cloudMovingBounds({ -200.f, 0 }, { 1920.f + 400, 600.f });
@@ -53,7 +30,7 @@ void SceneGame::Init()
 
 	for (int i = 1; i <= 3; ++i) {
 		BackgroundCloudGo* backgroundGoCloud = new BackgroundCloudGo("Cloud" + std::to_string(i));
-		backgroundGoCloud->SetTexture(*textureManager.GetResource(cloudId));
+		backgroundGoCloud->SetTexture(*textureManager.GetResource("graphics/cloud.png"));
 		backgroundGoCloud->SetOrigin(Origins::MC);
 		backgroundGoCloud->SetPosition({ 0.f, 1080.f / 2 });
 		backgroundGoCloud->SetBounds(cloudMovingBounds);
@@ -67,11 +44,14 @@ void SceneGame::Init()
 	AddGameObject(tree);
 
 	player = new PlayerGo("Player");
+
+
+
 	AddGameObject(player);
 
 
 	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
-	backgroundGoBee->SetTexture(*textureManager.GetResource(beeId));
+	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
 	backgroundGoBee->SetOrigin(Origins::MC);
 	backgroundGoBee->SetPosition({ 1920.f / 2, 800.f });
 	backgroundGoBee->SetBounds(beeMovingBounds);
@@ -93,13 +73,13 @@ void SceneGame::Init()
 
 
 	uiScore = new UIScore("uiScore");
-	uiScore->Set(*fontManager.GetResource(fontId), "uiScore", 40, sf::Color::White);
+	uiScore->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "uiScore", 40, sf::Color::White);
 	uiScore->SetOrigin(Origins::TL);
 	uiScore->SetPosition({ 0,0 });
 	AddGameObject(uiScore);
 
 	uiIntro = new TextGo("uiIntro");
-	uiIntro->Set(*fontManager.GetResource(fontId), "PRESS ENTER TO START!", 75, sf::Color::White);
+	uiIntro->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "PRESS ENTER TO START!", 75, sf::Color::White);
 	uiIntro->SetOrigin(Origins::MC);
 	uiIntro->SetPosition({ 1920.f / 2, 1080.f / 2 });
 	AddGameObject(uiIntro);
@@ -110,7 +90,7 @@ void SceneGame::Init()
 	}
 }
 
-void SceneGame::Release()
+void SceneGameSingle::Release()
 {
 	Scene::Release();
 
@@ -118,54 +98,64 @@ void SceneGame::Release()
 	uiIntro = nullptr;
 }
 
-void SceneGame::Enter()
+void SceneGameSingle::Enter()
 {
 	Scene::Enter();
 	SetStatus(Status::Awake);
 }
 
-void SceneGame::Exit()
+void SceneGameSingle::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
 }
 
-void SceneGame::Update(float dt)
+void SceneGameSingle::Update(float dt)
 {
 	Scene::Update(dt);
 
 	switch (currentStatus)
 	{
-	case SceneGame::Status::Awake:
+	case SceneGameSingle::Status::Awake:
 		UpdateAwake(dt);
 		break;
-	case SceneGame::Status::Game:
+	case SceneGameSingle::Status::Game:
 		UpdateGame(dt);
 	break;
-	case SceneGame::Status::GameOver:
+	case SceneGameSingle::Status::GameOver:
 		UpdateGameOver(dt);
 		break;
-	case SceneGame::Status::Pause:
+	case SceneGameSingle::Status::Pause:
 		UpdatePause(dt);
 		break;
 	}
 }
 
-void SceneGame::UpdateAwake(float dt)
+void SceneGameSingle::UpdateAwake(float dt)
 {
-	bgm.pause();
+	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
+	}
+
+	switch (SCENEMANAGER.GetPlayerOneSelect())
+	{
+	case 1:
+		player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+		break;
+	case 2:
+		player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+		break;
 	}
 } 
 
-void SceneGame::UpdateGame(float dt)
+void SceneGameSingle::UpdateGame(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SetStatus(Status::Pause);
-		bgm.pause();
+		SCENEMANAGER.PauseBGM();
 	}
 	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
 	{
@@ -185,7 +175,8 @@ void SceneGame::UpdateGame(float dt)
 		uiScore->AddScore(10.f);
 		player->SetAxeActive(true);
 
-		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
 		sound.play();
 	}
 
@@ -202,7 +193,9 @@ void SceneGame::UpdateGame(float dt)
 		uiScore->AddScore(10.f);
 		player->SetAxeActive(true);
 
-		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
+		sound.resetBuffer();
+
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
 		sound.play();
 	}
 
@@ -215,20 +208,20 @@ void SceneGame::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource(deathId));
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
-		bgm.stop();
+		SCENEMANAGER.StopBGM();
 	}
 
 	if (timebar->GetCurrentRectSize().x <= 0)				// 사망 상태 - timeover
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource(outOfTimeId));
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
-		bgm.stop();
+		SCENEMANAGER.StopBGM();
 	}
 
 	auto it = useEffectList.begin();
@@ -249,7 +242,7 @@ void SceneGame::UpdateGame(float dt)
 	}
 }
 
-void SceneGame::UpdateGameOver(float dt)
+void SceneGameSingle::UpdateGameOver(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
@@ -258,25 +251,25 @@ void SceneGame::UpdateGameOver(float dt)
 		{
 			obj->Reset();
 		}
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
 	}
 }
 
-void SceneGame::UpdatePause(float dt)
+void SceneGameSingle::UpdatePause(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SetStatus(Status::Game);
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow& window)
+void SceneGameSingle::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
 }
 
-void SceneGame::SetStatus(Status newStatus)
+void SceneGameSingle::SetStatus(Status newStatus)
 {
 	Status prevStatus = currentStatus;
 
@@ -284,21 +277,21 @@ void SceneGame::SetStatus(Status newStatus)
 
 	switch (currentStatus)
 	{
-	case SceneGame::Status::Awake:
+	case SceneGameSingle::Status::Awake:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("PRESS ENTER TO START!");
 		break;
-	case SceneGame::Status::Game:
+	case SceneGameSingle::Status::Game:
 		FRAMEWORK.SetTimeScale(1.f);
 		uiIntro->SetActive(false);
 		break;
-	case SceneGame::Status::GameOver:
+	case SceneGameSingle::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("GAME OVER ^.^");
 		break;
-	case SceneGame::Status::Pause:
+	case SceneGameSingle::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("PRESS ESC TO RESUME!");
@@ -306,14 +299,14 @@ void SceneGame::SetStatus(Status newStatus)
 	}
 }
 
-void SceneGame::PlayEffectLog(Sides side)
+void SceneGameSingle::PlayEffectLog(Sides side)
 {
 	EffectLog* effectLog = nullptr;
 
 	if (unuseEffectList.empty())
 	{
 		effectLog = new EffectLog();
-		effectLog->SetTexture(logId);
+		effectLog->SetTexture("graphics/log.png");
 		effectLog->SetOrigin(Origins::BC);
 		effectLog->Init();
 	}

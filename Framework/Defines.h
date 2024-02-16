@@ -25,8 +25,18 @@ enum class Sides
 enum class SceneIDs
 {
 	None = -1,
-	SceneDev1,
-	SceneDev2,
-	SceneGame,
+	SceneTitle,
+	SceneSelectMode,
+	SceneSelectCharacter,
+	SceneGameSingle,
+	SceneGameDuo,
 	COUNT, // SceneÀÇ °³¼ö
+};
+
+enum class PlayerSelectCharacter
+{
+	None = -1,
+	WoodCutter,
+	YoungWoodCutter,
+	COUNT,
 };
