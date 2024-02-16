@@ -73,19 +73,39 @@ void SceneSelectCharacter::Exit()
 
 void SceneSelectCharacter::Update(float dt)                              //1번 or 2번 캐릭터 선택 시 화면 전환.
 {
-	Scene::Update(dt);                                                  
+	Scene::Update(dt);          
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)       //1인 모드          //수정하기  오호
+	{
+		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    //SelectMod에서 1인, 2인 어떤걸 선택했는지 어떻게 체크하지?
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(1);                             //잠와요 잠이와 일단 오류는 안나는데// 내일 집계약하러 갑니다아  
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle); //이렇게 하면 1인 모드로 밖에 못가는데 어쩌지???
 
-	if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    //SelectMod에서 1인, 2인 어떤걸 선택했는지 어떻게 체크하지?
-	{
-		SCENEMANAGER.StopBGM();
-		SCENEMANAGER.SetPlayerOneSelect(1);                              
-		SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle); //이렇게 하면 1인 모드로 밖에 못가는데 어쩌지???
-																		
+		}
+		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(2);
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+		}
 	}
-	if (InputManager::GetKeyDown(sf::Keyboard::Num2))
+	else                              //2인 모드 2번 선택
 	{
-		SCENEMANAGER.StopBGM();
-		SCENEMANAGER.SetPlayerOneSelect(2);
-		SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+		
+		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                   
+		{
+			SCENEMANAGER.StopBGM();  
+			SCENEMANAGER.SetPlayerOneSelect(1);
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+
+		}
+		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(2);
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+		}
 	}
+	
 }
