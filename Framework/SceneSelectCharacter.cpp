@@ -62,6 +62,7 @@ void SceneSelectCharacter::Release()
 
 void SceneSelectCharacter::Enter()
 {
+	SCENEMANAGER.PlayBGM();
 	Scene::Enter();
 }
 
@@ -76,12 +77,14 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    //SelectMod에서 1인, 2인 어떤걸 선택했는지 어떻게 체크하지?
 	{
+		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetPlayerOneSelect(1);                              
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle); //이렇게 하면 1인 모드로 밖에 못가는데 어쩌지???
 																		
 	}
 	if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 	{
+		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetPlayerTwoSelect(1);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
 	}
