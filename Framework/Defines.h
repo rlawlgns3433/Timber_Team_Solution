@@ -25,8 +25,9 @@ enum class Sides
 enum class SceneIDs
 {
 	None = -1,
-	SceneDev1,
-	SceneDev2,
-	SceneGame,
+	SceneTitle,
+	SceneSelectMode,
+	SceneSelectCharacter,
+	SceneGameSingle,
 	COUNT, // SceneÀÇ °³¼ö
 };

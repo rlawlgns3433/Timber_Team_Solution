@@ -31,9 +31,9 @@ void PlayerGo::Reset()
 	SetPosition({ CenterX + playerOffsetX, 600 });
 	SetFlipX(false);
 
-	axe.SetActive(true);
 	axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
 	axe.SetFlipX(true);
+	state = PlayerState::ALIVE;
 }
 
 void PlayerGo::Update(float dt)

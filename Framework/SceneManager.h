@@ -21,8 +21,11 @@ protected:
 	SceneManager& operator=(SceneManager&&)		 = delete;
 
 	std::vector<Scene*> scenes;
-	SceneIDs startScene = SceneIDs::SceneGame;
+	SceneIDs startScene = SceneIDs::SceneGameSingle;
 	SceneIDs currentScene = startScene;
+
+	int playeroneSelect = 0;
+	int playertwoSelect = 0;
 
 public:
 
@@ -37,6 +40,10 @@ public:
 	void ChangeScene(SceneIDs id);
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
+
+	// TEST
+	void SetPlayerOneSelect(int sel) { this->playeroneSelect = sel; }
+	int GetPlayerOneSelect() { return this->playeroneSelect; }
 };
 
 #define SCENEMANAGER (Singleton<SceneManager>::Instance())

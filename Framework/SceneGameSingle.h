@@ -8,7 +8,7 @@ class TreeGo;
 class EffectLog;
 class PlayerGo;
 
-class SceneGame : public Scene
+class SceneGameSingle : public Scene
 {
 public :
 	// Scene의 상태
@@ -21,10 +21,10 @@ public :
 	};
 
 protected:
-	SceneGame(const SceneGame&)				 = delete;
-	SceneGame(SceneGame&&)					 = delete;
-	SceneGame& operator=(const SceneGame&)	 = delete;
-	SceneGame& operator=(SceneGame&&)		 = delete;
+	SceneGameSingle(const SceneGameSingle&)				 = delete;
+	SceneGameSingle(SceneGameSingle&&)					 = delete;
+	SceneGameSingle& operator=(const SceneGameSingle&)	 = delete;
+	SceneGameSingle& operator=(SceneGameSingle&&)		 = delete;
 
 	UIScore* uiScore = nullptr;
 	TextGo* uiIntro = nullptr;
@@ -55,8 +55,8 @@ protected:
 	std::string bgmId = "sound/kerning.mp3";
 
 public :
-	SceneGame(SceneIDs id);
-	virtual ~SceneGame();
+	SceneGameSingle(SceneIDs id);
+	virtual ~SceneGameSingle();
 	
 	// Scene을(를) 통해 상속됨
 	void Init() override;

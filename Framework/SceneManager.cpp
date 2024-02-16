@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "SceneManager.h"
-#include "SceneDev1.h"
-#include "SceneDev2.h"
-#include "SceneGame.h"
+#include "SceneTitle.h"
+#include "SceneSelectCharacter.h"
+#include "SceneSelectMode.h"
+#include "SceneGameSingle.h"
 
 SceneManager::~SceneManager()
 {
@@ -13,14 +14,17 @@ void SceneManager::Init()
 {
 	Release();
 
-	scenes.push_back(new SceneDev1(SceneIDs::SceneDev1));
-	scenes.push_back(new SceneDev2(SceneIDs::SceneDev2));
-	scenes.push_back(new SceneGame(SceneIDs::SceneGame));
+	scenes.push_back(new SceneTitle(SceneIDs::SceneTitle));
+	scenes.push_back(new SceneSelectCharacter(SceneIDs::SceneSelectCharacter));
+	scenes.push_back(new SceneSelectMode(SceneIDs::SceneSelectMode));
+	scenes.push_back(new SceneGameSingle(SceneIDs::SceneGameSingle));
 	
 	for (auto scene : scenes)
 	{
 		scene->Init();
 	}
+
+	SCENEMANAGER.SetPlayerOneSelect(1);
 
 	currentScene = startScene;
 	scenes[(int)currentScene]->Enter();

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "SceneGame.h"
+#include "SceneGameSingle.h"
 #include "SpriteGo.h"
 #include "BackgroundCloudGo.h"
 #include "BackgroundBeeGo.h"
@@ -10,16 +10,16 @@
 #include "EffectLog.h"
 #include "PlayerGo.h"
 
-SceneGame::SceneGame(SceneIDs id) 
+SceneGameSingle::SceneGameSingle(SceneIDs id) 
 	: Scene(id)
 {
 }
 
-SceneGame::~SceneGame()
+SceneGameSingle::~SceneGameSingle()
 {
 }
 
-void SceneGame::Init()
+void SceneGameSingle::Init()
 {
 	// Texture
 	textureManager.Load(backgroundId);
@@ -110,7 +110,7 @@ void SceneGame::Init()
 	}
 }
 
-void SceneGame::Release()
+void SceneGameSingle::Release()
 {
 	Scene::Release();
 
@@ -118,39 +118,39 @@ void SceneGame::Release()
 	uiIntro = nullptr;
 }
 
-void SceneGame::Enter()
+void SceneGameSingle::Enter()
 {
 	Scene::Enter();
 	SetStatus(Status::Awake);
 }
 
-void SceneGame::Exit()
+void SceneGameSingle::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
 }
 
-void SceneGame::Update(float dt)
+void SceneGameSingle::Update(float dt)
 {
 	Scene::Update(dt);
 
 	switch (currentStatus)
 	{
-	case SceneGame::Status::Awake:
+	case SceneGameSingle::Status::Awake:
 		UpdateAwake(dt);
 		break;
-	case SceneGame::Status::Game:
+	case SceneGameSingle::Status::Game:
 		UpdateGame(dt);
 	break;
-	case SceneGame::Status::GameOver:
+	case SceneGameSingle::Status::GameOver:
 		UpdateGameOver(dt);
 		break;
-	case SceneGame::Status::Pause:
+	case SceneGameSingle::Status::Pause:
 		UpdatePause(dt);
 		break;
 	}
 }
 
-void SceneGame::UpdateAwake(float dt)
+void SceneGameSingle::UpdateAwake(float dt)
 {
 	bgm.pause();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
@@ -160,7 +160,7 @@ void SceneGame::UpdateAwake(float dt)
 	}
 } 
 
-void SceneGame::UpdateGame(float dt)
+void SceneGameSingle::UpdateGame(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
@@ -185,6 +185,7 @@ void SceneGame::UpdateGame(float dt)
 		uiScore->AddScore(10.f);
 		player->SetAxeActive(true);
 
+		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
 		sound.play();
 	}
@@ -202,6 +203,8 @@ void SceneGame::UpdateGame(float dt)
 		uiScore->AddScore(10.f);
 		player->SetAxeActive(true);
 
+		sound.resetBuffer();
+
 		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
 		sound.play();
 	}
@@ -215,7 +218,7 @@ void SceneGame::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
-
+		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource(deathId));
 		sound.play();
 		bgm.stop();
@@ -225,7 +228,7 @@ void SceneGame::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
-
+		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource(outOfTimeId));
 		sound.play();
 		bgm.stop();
@@ -249,7 +252,7 @@ void SceneGame::UpdateGame(float dt)
 	}
 }
 
-void SceneGame::UpdateGameOver(float dt)
+void SceneGameSingle::UpdateGameOver(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
@@ -262,7 +265,7 @@ void SceneGame::UpdateGameOver(float dt)
 	}
 }
 
-void SceneGame::UpdatePause(float dt)
+void SceneGameSingle::UpdatePause(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
@@ -271,12 +274,12 @@ void SceneGame::UpdatePause(float dt)
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow& window)
+void SceneGameSingle::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
 }
 
-void SceneGame::SetStatus(Status newStatus)
+void SceneGameSingle::SetStatus(Status newStatus)
 {
 	Status prevStatus = currentStatus;
 
@@ -284,21 +287,21 @@ void SceneGame::SetStatus(Status newStatus)
 
 	switch (currentStatus)
 	{
-	case SceneGame::Status::Awake:
+	case SceneGameSingle::Status::Awake:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("PRESS ENTER TO START!");
 		break;
-	case SceneGame::Status::Game:
+	case SceneGameSingle::Status::Game:
 		FRAMEWORK.SetTimeScale(1.f);
 		uiIntro->SetActive(false);
 		break;
-	case SceneGame::Status::GameOver:
+	case SceneGameSingle::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("GAME OVER ^.^");
 		break;
-	case SceneGame::Status::Pause:
+	case SceneGameSingle::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("PRESS ESC TO RESUME!");
@@ -306,7 +309,7 @@ void SceneGame::SetStatus(Status newStatus)
 	}
 }
 
-void SceneGame::PlayEffectLog(Sides side)
+void SceneGameSingle::PlayEffectLog(Sides side)
 {
 	EffectLog* effectLog = nullptr;
 
