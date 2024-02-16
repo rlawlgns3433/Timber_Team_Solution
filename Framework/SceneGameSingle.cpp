@@ -21,31 +21,12 @@ SceneGameSingle::~SceneGameSingle()
 
 void SceneGameSingle::Init()
 {
-	// Texture
-	textureManager.Load(backgroundId);
-	textureManager.Load(cloudId);
-	textureManager.Load(beeId);
-	textureManager.Load(treeId);
-	textureManager.Load(branchId);
-	textureManager.Load(logId);
-	textureManager.Load(playerId);
-	textureManager.Load(ripId);
-	textureManager.Load(axeId);
-
-	// Font
-	fontManager.Load(fontId);
-
-	// Sound, Music
-	soundManager.Load(chopId);
-	soundManager.Load(deathId);
-	soundManager.Load(outOfTimeId);
-
 	// TODO : 게임 진행 시에만 재생되도록 변경 필요!
-	bgm.openFromFile(bgmId);
-	bgm.play();
+	bgm.openFromFile("sound/kerning.mp3");
+	//bgm.play();
 
 	SpriteGo* spriteGoBackground = new SpriteGo("background");
-	spriteGoBackground->SetTexture(*textureManager.GetResource(backgroundId));
+	spriteGoBackground->SetTexture(*textureManager.GetResource("graphics/background.png"));
 	AddGameObject(spriteGoBackground);
 
 	sf::FloatRect cloudMovingBounds({ -200.f, 0 }, { 1920.f + 400, 600.f });
@@ -53,7 +34,7 @@ void SceneGameSingle::Init()
 
 	for (int i = 1; i <= 3; ++i) {
 		BackgroundCloudGo* backgroundGoCloud = new BackgroundCloudGo("Cloud" + std::to_string(i));
-		backgroundGoCloud->SetTexture(*textureManager.GetResource(cloudId));
+		backgroundGoCloud->SetTexture(*textureManager.GetResource("graphics/cloud.png"));
 		backgroundGoCloud->SetOrigin(Origins::MC);
 		backgroundGoCloud->SetPosition({ 0.f, 1080.f / 2 });
 		backgroundGoCloud->SetBounds(cloudMovingBounds);
@@ -71,7 +52,7 @@ void SceneGameSingle::Init()
 
 
 	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
-	backgroundGoBee->SetTexture(*textureManager.GetResource(beeId));
+	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
 	backgroundGoBee->SetOrigin(Origins::MC);
 	backgroundGoBee->SetPosition({ 1920.f / 2, 800.f });
 	backgroundGoBee->SetBounds(beeMovingBounds);
@@ -93,13 +74,13 @@ void SceneGameSingle::Init()
 
 
 	uiScore = new UIScore("uiScore");
-	uiScore->Set(*fontManager.GetResource(fontId), "uiScore", 40, sf::Color::White);
+	uiScore->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "uiScore", 40, sf::Color::White);
 	uiScore->SetOrigin(Origins::TL);
 	uiScore->SetPosition({ 0,0 });
 	AddGameObject(uiScore);
 
 	uiIntro = new TextGo("uiIntro");
-	uiIntro->Set(*fontManager.GetResource(fontId), "PRESS ENTER TO START!", 75, sf::Color::White);
+	uiIntro->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "PRESS ENTER TO START!", 75, sf::Color::White);
 	uiIntro->SetOrigin(Origins::MC);
 	uiIntro->SetPosition({ 1920.f / 2, 1080.f / 2 });
 	AddGameObject(uiIntro);
@@ -186,7 +167,7 @@ void SceneGameSingle::UpdateGame(float dt)
 		player->SetAxeActive(true);
 
 		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
 		sound.play();
 	}
 
@@ -205,7 +186,7 @@ void SceneGameSingle::UpdateGame(float dt)
 
 		sound.resetBuffer();
 
-		sound.setBuffer(*SOUND_MANAGER.GetResource(chopId));
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
 		sound.play();
 	}
 
@@ -219,7 +200,7 @@ void SceneGameSingle::UpdateGame(float dt)
 		player->SetDead();
 		SetStatus(Status::GameOver);
 		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource(deathId));
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
 		bgm.stop();
 	}
@@ -229,7 +210,7 @@ void SceneGameSingle::UpdateGame(float dt)
 		player->SetDead();
 		SetStatus(Status::GameOver);
 		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource(outOfTimeId));
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
 		bgm.stop();
 	}
@@ -316,7 +297,7 @@ void SceneGameSingle::PlayEffectLog(Sides side)
 	if (unuseEffectList.empty())
 	{
 		effectLog = new EffectLog();
-		effectLog->SetTexture(logId);
+		effectLog->SetTexture("graphics/log.png");
 		effectLog->SetOrigin(Origins::BC);
 		effectLog->Init();
 	}

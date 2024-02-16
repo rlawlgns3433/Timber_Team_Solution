@@ -21,7 +21,7 @@ protected:
 	SceneManager& operator=(SceneManager&&)		 = delete;
 
 	std::vector<Scene*> scenes;
-	SceneIDs startScene = SceneIDs::SceneGameSingle;
+	SceneIDs startScene = SceneIDs::SceneTitle;
 	SceneIDs currentScene = startScene;
 
 	int playeroneSelect = 0;
