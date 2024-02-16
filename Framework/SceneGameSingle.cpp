@@ -45,15 +45,7 @@ void SceneGameSingle::Init()
 
 	player = new PlayerGo("Player");
 
-	switch (SCENEMANAGER.GetPlayerOneSelect())
-	{
-	case 1:
-		player->SetTexture(*textureManager.GetResource("graphics/player1.png"));
-		break;
-	case 2 :
-		player->SetTexture(*textureManager.GetResource("graphics/player2.png"));
-		break;
-	}
+
 
 	AddGameObject(player);
 
@@ -145,6 +137,16 @@ void SceneGameSingle::UpdateAwake(float dt)
 	{
 		SetStatus(Status::Game);
 		SCENEMANAGER.PlayBGM();
+	}
+
+	switch (SCENEMANAGER.GetPlayerOneSelect())
+	{
+	case 1:
+		player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+		break;
+	case 2:
+		player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+		break;
 	}
 } 
 

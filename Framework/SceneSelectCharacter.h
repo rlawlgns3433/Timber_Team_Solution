@@ -10,6 +10,9 @@ protected :
 	SpriteGo* spritePlayer2;
 	TextGo* SelectText;
 
+	PlayerSelectCharacter playerOneSelectCharacter = PlayerSelectCharacter::None;
+	PlayerSelectCharacter playerTwoSelectCharacter = PlayerSelectCharacter::None;
+
 public :
 	SceneSelectCharacter(SceneIDs id);
 	virtual ~SceneSelectCharacter();

@@ -32,3 +32,11 @@ enum class SceneIDs
 	SceneGameDuo,
 	COUNT, // SceneÀÇ °³¼ö
 };
+
+enum class PlayerSelectCharacter
+{
+	None = -1,
+	WoodCutter,
+	YoungWoodCutter,
+	COUNT,
+};

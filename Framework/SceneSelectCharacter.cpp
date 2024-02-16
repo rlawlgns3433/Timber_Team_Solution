@@ -81,7 +81,6 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 			SCENEMANAGER.StopBGM();
 			SCENEMANAGER.SetPlayerOneSelect(1);                             //잠와요 잠이와 일단 오류는 안나는데// 내일 집계약하러 갑니다아  
 			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle); //이렇게 하면 1인 모드로 밖에 못가는데 어쩌지???
-
 		}
 		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 		{
@@ -95,17 +94,36 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 		
 		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                   
 		{
-			SCENEMANAGER.StopBGM();  
 			SCENEMANAGER.SetPlayerOneSelect(1);
-			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
-
+			playerOneSelectCharacter = PlayerSelectCharacter::WoodCutter;
 		}
 		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 		{
+			SCENEMANAGER.SetPlayerOneSelect(2);
+			playerOneSelectCharacter = PlayerSelectCharacter::YoungWoodCutter;
+		}
+
+		if (InputManager::GetKeyDown(sf::Keyboard::Num9)) 
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(1);
+			playerTwoSelectCharacter = PlayerSelectCharacter::WoodCutter;
+		}
+		if (InputManager::GetKeyDown(sf::Keyboard::Num0))
+		{
 			SCENEMANAGER.StopBGM();
 			SCENEMANAGER.SetPlayerOneSelect(2);
-			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+			playerTwoSelectCharacter = PlayerSelectCharacter::YoungWoodCutter;
 		}
+
+		// 둘 다 선택된 경우 씬 전환
+		if (playerOneSelectCharacter != PlayerSelectCharacter::None
+			&& playerTwoSelectCharacter != PlayerSelectCharacter::None)
+		{
+			SCENEMANAGER.StopBGM();
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameDuo);
+		}
+
 	}
 	
 }

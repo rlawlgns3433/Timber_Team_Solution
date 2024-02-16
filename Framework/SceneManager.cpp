@@ -26,8 +26,6 @@ void SceneManager::Init()
 		scene->Init();
 	}
 
-	SCENEMANAGER.SetPlayerOneSelect(1);
-
 	currentScene = startScene;
 	scenes[(int)currentScene]->Enter();
 }

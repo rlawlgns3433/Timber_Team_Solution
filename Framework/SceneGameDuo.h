@@ -23,16 +23,20 @@ protected :
 	SceneGameDuo(const SceneGameDuo&)				 = delete;
 	SceneGameDuo(SceneGameDuo&&)					 = delete;
 	SceneGameDuo& operator=(const SceneGameDuo&)	 = delete;
-	SceneGameDuo& operator=(SceneGameDuo&&)		 = delete;
+	SceneGameDuo& operator=(SceneGameDuo&&)			 = delete;
 
 public :
 
-	UIScore* uiScore = nullptr;
+	UIScore* uiScore1 = nullptr;
+	UIScore* uiScore2 = nullptr;
 	TextGo* uiIntro = nullptr;
-	TimebarGo* timebar = nullptr;
+	TimebarGo* timebar1 = nullptr;
+	TimebarGo* timebar2 = nullptr;
 	Status currentStatus = Status::Awake;
-	TreeGo* tree = nullptr;
-	PlayerGo* player = nullptr;
+	TreeGo* tree1 = nullptr;
+	TreeGo* tree2 = nullptr;
+	PlayerGo* player1 = nullptr;
+	PlayerGo* player2 = nullptr;
 
 	sf::Sound sound;
 
@@ -49,13 +53,14 @@ public:
 	void Enter() override;
 	void Exit() override;
 	void Update(float dt);
-	//void UpdateAwake(float dt);
-	//void UpdateGame(float dt);
-	//void UpdateGameOver(float dt);
-	//void UpdatePause(float dt);
-	//void Draw(sf::RenderWindow& window);
+	void UpdateAwake(float dt);
+	void UpdateGame(float dt);
+	void UpdateGameOver(float dt);
+	void UpdatePause(float dt);
 
-	//void SetStatus(Status newStatus);
+	void Draw(sf::RenderWindow& window);
 
-	//void PlayEffectLog(Sides side);
+	void SetStatus(Status newStatus);
+
+	void PlayEffectLog(Sides side);
 };
