@@ -85,7 +85,7 @@ void SceneSelectCharacter::Update(float dt)                              //1¹ø o
 	if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 	{
 		SCENEMANAGER.StopBGM();
-		SCENEMANAGER.SetPlayerTwoSelect(1);
+		SCENEMANAGER.SetPlayerOneSelect(2);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
 	}
 }
