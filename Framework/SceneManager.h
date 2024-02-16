@@ -14,6 +14,15 @@ class SceneManager : public Singleton<SceneManager>
 {
 	friend class Singleton<SceneManager>;
 
+public:
+	enum class Mod
+	{
+		NONE = -1,
+		SINGLE,
+		DUO,
+		COUNT,
+	};
+
 protected:
 	SceneManager(const SceneManager&)			 = delete;
 	SceneManager(SceneManager&&)				 = delete;
@@ -45,17 +54,9 @@ protected:
 	int playeroneSelect = 0;
 	int playertwoSelect = 0;
 
-	bool isSingleMode = true;
+	Mod currentMode = Mod::SINGLE;
 
 public:
-
-	enum class Mod
-	{
-		NONE = -1,
-		SINGLE,
-		DUO,
-		COUNT,
-	};
 
 	SceneManager() = default;
 	virtual ~SceneManager();
@@ -76,7 +77,7 @@ public:
 	int GetPlayerTwoSelect() { return this->playertwoSelect; }
 
 	void SetMode(Mod mod);
-	bool GetMode() { return isSingleMode; }
+	Mod GetMode() const { return currentMode; }
 
 	void LoadAllResources();
 	void PlayBGM();
