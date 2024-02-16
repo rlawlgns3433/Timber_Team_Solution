@@ -56,6 +56,7 @@ void TextGo::SetPosition(float x, float y)
 {
 	this->position.x = x;
 	this->position.y = y;
+	text.setPosition(this->position);
 }
 
 void TextGo::SetOrigin(Origins preset)

@@ -1,7 +1,15 @@
 #pragma once
+
+class SpriteGo;
+class TextGo;
+
 class SceneTitle : public Scene
 {
 protected:
+	SpriteGo* spriteGoBackground;
+	TextGo* textIntro;
+	TextGo* textTitle;
+
 	std::string backgroundId = "graphics/background.png";
 	std::string cloudId = "graphics/cloud.png";
 	std::string beeId = "graphics/bee.png";
@@ -17,6 +25,8 @@ protected:
 	std::string outOfTimeId = "sound/out_of_time.wav";
 	std::string bgmId = "sound/kerning.mp3";
 
+	float blinkTime = 0.7f;
+	float time = 0.f;
 
 public:
 	SceneTitle(SceneIDs id);
@@ -35,4 +45,5 @@ public:
 	void Update(float dt) override;
 
 	void LoadAllResources();
+	void BlinkIntro(float blinkTime);
 };
