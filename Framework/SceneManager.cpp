@@ -4,6 +4,7 @@
 #include "SceneSelectCharacter.h"
 #include "SceneSelectMode.h"
 #include "SceneGameSingle.h"
+#include "SceneGameDuo.h"
 
 SceneManager::~SceneManager()
 {
@@ -18,6 +19,7 @@ void SceneManager::Init()
 	scenes.push_back(new SceneSelectMode(SceneIDs::SceneSelectMode));
 	scenes.push_back(new SceneSelectCharacter(SceneIDs::SceneSelectCharacter));
 	scenes.push_back(new SceneGameSingle(SceneIDs::SceneGameSingle));
+	scenes.push_back(new SceneGameDuo(SceneIDs::SceneGameDuo));
 
 	for (auto scene : scenes)
 	{

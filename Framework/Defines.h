@@ -29,5 +29,6 @@ enum class SceneIDs
 	SceneSelectMode,
 	SceneSelectCharacter,
 	SceneGameSingle,
+	SceneGameDuo,
 	COUNT, // SceneÀÇ °³¼ö
 };

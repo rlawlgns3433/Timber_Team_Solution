@@ -44,6 +44,14 @@ void SceneGameSingle::Init()
 	AddGameObject(tree);
 
 	player = new PlayerGo("Player");
+
+	switch (SCENEMANAGER.GetPlayerOneSelect())
+	{
+	case 1:
+
+	case 2 :
+	}
+
 	AddGameObject(player);
 
 
