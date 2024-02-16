@@ -48,8 +48,11 @@ void SceneGameSingle::Init()
 	switch (SCENEMANAGER.GetPlayerOneSelect())
 	{
 	case 1:
-
+		player->SetTexture(*textureManager.GetResource("graphics/player1.png"));
+		break;
 	case 2 :
+		player->SetTexture(*textureManager.GetResource("graphics/player2.png"));
+		break;
 	}
 
 	AddGameObject(player);
