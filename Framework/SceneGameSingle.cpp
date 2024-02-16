@@ -21,10 +21,6 @@ SceneGameSingle::~SceneGameSingle()
 
 void SceneGameSingle::Init()
 {
-	// TODO : 게임 진행 시에만 재생되도록 변경 필요!
-	bgm.openFromFile("sound/kerning.mp3");
-	//bgm.play();
-
 	SpriteGo* spriteGoBackground = new SpriteGo("background");
 	spriteGoBackground->SetTexture(*textureManager.GetResource("graphics/background.png"));
 	AddGameObject(spriteGoBackground);
@@ -133,11 +129,11 @@ void SceneGameSingle::Update(float dt)
 
 void SceneGameSingle::UpdateAwake(float dt)
 {
-	bgm.pause();
+	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
 	}
 } 
 
@@ -146,7 +142,7 @@ void SceneGameSingle::UpdateGame(float dt)
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SetStatus(Status::Pause);
-		bgm.pause();
+		SCENEMANAGER.PauseBGM();
 	}
 	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
 	{
@@ -202,7 +198,7 @@ void SceneGameSingle::UpdateGame(float dt)
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
-		bgm.stop();
+		SCENEMANAGER.StopBGM();
 	}
 
 	if (timebar->GetCurrentRectSize().x <= 0)				// 사망 상태 - timeover
@@ -212,7 +208,7 @@ void SceneGameSingle::UpdateGame(float dt)
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
-		bgm.stop();
+		SCENEMANAGER.StopBGM();
 	}
 
 	auto it = useEffectList.begin();
@@ -242,7 +238,7 @@ void SceneGameSingle::UpdateGameOver(float dt)
 		{
 			obj->Reset();
 		}
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
 	}
 }
 
@@ -251,7 +247,7 @@ void SceneGameSingle::UpdatePause(float dt)
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SetStatus(Status::Game);
-		bgm.play();
+		SCENEMANAGER.PlayBGM();
 	}
 }
 
