@@ -5,6 +5,7 @@
 #include <list>
 #include <unordered_map>
 #include <vector>
+#include <string>
 
 // SFML
 #include <SFML/Graphics.hpp>

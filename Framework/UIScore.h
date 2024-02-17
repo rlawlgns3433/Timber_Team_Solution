@@ -17,6 +17,7 @@ public:
 	UIScore(const std::string& name = "");
 
 	std::string GetScore() { return this->scoreFormat.append(std::to_string(score)); }
+	unsigned GetUnsignedScore() const { return score; }
 	void SetScore(size_t score);
 	void AddScore(size_t score);
 

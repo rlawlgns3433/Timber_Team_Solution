@@ -46,8 +46,11 @@ void SceneGameDuo::Init()
 	AddGameObject(tree1);
 	AddGameObject(tree2);
 
+
 	player1 = new PlayerGo("Player1");
 	player2 = new PlayerGo("Player2");
+	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
+	player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
 	AddGameObject(player1);
 	AddGameObject(player2);
 
@@ -109,6 +112,19 @@ void SceneGameDuo::Enter()
 void SceneGameDuo::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
+
+	uiScore1->SetOrigin(Origins::TL);
+	uiScore1->SetPosition(0, 0);
+	uiScore2->SetOrigin(Origins::TL);
+	uiScore2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.5f ,0 });
+
+	for (auto& effectLog : useEffectList)
+	{
+		effectLog->SetActive(false);
+		unuseEffectList.push_back(effectLog);
+	}
+
+	useEffectList.clear();
 }
 
 void SceneGameDuo::Update(float dt)
@@ -134,11 +150,23 @@ void SceneGameDuo::Update(float dt)
 
 void SceneGameDuo::UpdateAwake(float dt)
 {
+	player1->SetPosition({FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f});
+	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f});
+
 	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
 		SCENEMANAGER.PlayBGM();
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectCharacter);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 	}
 
 	switch (SCENEMANAGER.GetPlayerOneSelect())
@@ -180,12 +208,19 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar1->SetRectSize(timebar1->GetRectSize());
 		}
 	}
-
-	if (InputManager::GetKeyDown(sf::Keyboard::Left))
+	
+	/////////////////////////////player1/////////////////////////////////////
+	if (InputManager::GetKeyDown(sf::Keyboard::A) && !(int)player1->IsDead())
 	{
+		timebar1->AddTime(50.f);
+		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
+		{
+			timebar1->SetRectSize(timebar1->GetRectSize());
+		}
 		tree1->Chop(Sides::LEFT);
-		PlayEffectLog(Sides::LEFT);
+		PlayEffectLog(Sides::LEFT, tree1);
 		player1->UpdatePlayerSide(Sides::LEFT);
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 650.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -194,16 +229,22 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Left))
+	if (InputManager::GetKeyUp(sf::Keyboard::A) && !(int)player1->IsDead())
 	{
 		player1->SetAxeActive(false);
 	}
 
-	if (InputManager::GetKeyDown(sf::Keyboard::Right))
+	if (InputManager::GetKeyDown(sf::Keyboard::D) && !(int)player1->IsDead())
 	{
+		timebar1->AddTime(50.f);
+		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
+		{
+			timebar1->SetRectSize(timebar1->GetRectSize());
+		}
 		tree1->Chop(Sides::RIGHT);
-		PlayEffectLog(Sides::RIGHT);
+		PlayEffectLog(Sides::RIGHT, tree1);
 		player1->UpdatePlayerSide(Sides::RIGHT);
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -213,30 +254,125 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Right))
+	if (InputManager::GetKeyUp(sf::Keyboard::D) && !(int)player1->IsDead())
 	{
 		player1->SetAxeActive(false);
 	}
 
-	if (player1->GetPlayerSide() == tree1->GetFirstBranch()) // 사망 상태 - collide with branch
+
+	if (player1->GetPlayerSide() == tree1->GetFirstBranch() && !(int)player1->IsDead()) // player1 사망 상태 - collide with branch
 	{
 		player1->SetDead();
-		SetStatus(Status::GameOver);
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+
+
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
-		SCENEMANAGER.StopBGM();
 	}
-
-	if (timebar1->GetCurrentRectSize().x <= 0)				// 사망 상태 - timeover
+	if (timebar1->GetCurrentRectSize().x <= 0 && !(int)player1->IsDead())				// player1 사망 상태 - timeover
 	{
 		player1->SetDead();
-		SetStatus(Status::GameOver);
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
+	}
+
+	////////////////////////player2///////////////////////////////
+	if (InputManager::GetKeyDown(sf::Keyboard::Left) && !(int)player2->IsDead())
+	{
+		timebar2->AddTime(50.f);
+		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
+		{
+			timebar2->SetRectSize(timebar2->GetRectSize());
+		}
+		tree2->Chop(Sides::LEFT);
+		PlayEffectLog(Sides::LEFT, tree2);
+		player2->UpdatePlayerSide(Sides::LEFT);
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 650.f });
+		uiScore2->AddScore(10.f);
+		player2->SetAxeActive(true);
+
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		sound.play();
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Left) && !(int)player2->IsDead())
+	{
+		player2->SetAxeActive(false);
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Right) && !(int)player2->IsDead())
+	{
+		timebar2->AddTime(50.f);
+		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
+		{
+			timebar2->SetRectSize(timebar2->GetRectSize());
+		}
+		tree2->Chop(Sides::RIGHT);
+		PlayEffectLog(Sides::RIGHT, tree2);
+		player2->UpdatePlayerSide(Sides::RIGHT);
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
+		uiScore2->AddScore(10.f);
+		player2->SetAxeActive(true);
+
+		sound.resetBuffer();
+
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		sound.play();
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Right) && !(int)player2->IsDead())
+	{
+		player2->SetAxeActive(false);
+	}
+
+	if (player2->GetPlayerSide() == tree2->GetFirstBranch() && !(int)player2->IsDead()) // player2 사망 상태 - collide with branch
+	{
+		player2->SetDead();
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		sound.play();
+	}
+	if (timebar2->GetCurrentRectSize().x <= 0 && !(int)player2->IsDead())				// player2 사망 상태 - timeover
+	{
+		player2->SetDead();
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		sound.play();
+	}
+
+
+	// 4가지 case 모두 필요
+	/*
+	player1 player2
+	1		1
+	1		0	// player1 사운드 끄기
+	0		1	// player2 사운드 켜기
+	0		0	// 초기 상태
+	*/
+	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
+	{
+		SetStatus(Status::GameOver);
 		SCENEMANAGER.StopBGM();
 	}
+	/*else if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::ALIVE)
+	{
+		SetStatus(Status::GameOver);
+	}
+	else if (player1->IsDead() == PlayerState::ALIVE && player2->IsDead() == PlayerState::DEAD)
+	{
+		SetStatus(Status::GameOver);
+	}*/
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
@@ -258,6 +394,23 @@ void SceneGameDuo::UpdateGame(float dt)
 
 void SceneGameDuo::UpdateGameOver(float dt)
 {
+	uiIntro->SetText("GAME OVER ^.^");
+
+	if (uiScore1->GetUnsignedScore() > uiScore2->GetUnsignedScore())
+	{
+		uiIntro->SetText("Player1 Win!");
+	}
+	else if(uiScore1->GetUnsignedScore() < uiScore2->GetUnsignedScore())
+	{
+		uiIntro->SetText("Player2 Win!");
+	}
+	else
+	{
+		uiIntro->SetText("Draw");
+	}
+
+	uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f});
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
@@ -265,7 +418,48 @@ void SceneGameDuo::UpdateGameOver(float dt)
 		{
 			obj->Reset();
 		}
+
+		switch (SCENEMANAGER.GetPlayerOneSelect())
+		{
+		case 1:
+			player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
+
+		switch (SCENEMANAGER.GetPlayerTwoSelect())
+		{
+		case 1:
+			player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
+
+		uiScore1->SetPosition({ 0,0 });
+		uiScore2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.5f ,0 });
+
+		for (auto& effectLog : useEffectList)
+		{
+			effectLog->SetActive(false);
+			unuseEffectList.push_back(effectLog);
+		}
+
+		useEffectList.clear();
+
 		SCENEMANAGER.PlayBGM();
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 	}
 }
 
@@ -303,7 +497,6 @@ void SceneGameDuo::SetStatus(Status newStatus)
 	case SceneGameDuo::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
-		uiIntro->SetText("GAME OVER ^.^");
 		break;
 	case SceneGameDuo::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
@@ -313,7 +506,7 @@ void SceneGameDuo::SetStatus(Status newStatus)
 	}
 }
 
-void SceneGameDuo::PlayEffectLog(Sides side)
+void SceneGameDuo::PlayEffectLog(Sides side, const TreeGo* tree)
 {
 	EffectLog* effectLog = nullptr;
 
@@ -332,7 +525,7 @@ void SceneGameDuo::PlayEffectLog(Sides side)
 
 	effectLog->SetActive(true);
 	effectLog->Reset();
-	effectLog->SetPosition({ tree1->GetPosition() });
+	effectLog->SetPosition({ tree->GetPosition() });
 
 	sf::Vector2f velocity({ 700.f, -300.f });
 

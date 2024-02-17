@@ -11,6 +11,7 @@ protected:
 	TextGo* num1ForSinglePlay;
 	TextGo* num2ForDuoPlay;
 
+
 public:
 	SceneSelectMode(SceneIDs id);
 	virtual ~SceneSelectMode();
@@ -20,7 +21,7 @@ public:
 	SceneSelectMode& operator=(const SceneSelectMode&) = delete;
 	SceneSelectMode& operator=(SceneSelectMode&&) = delete;
 
-
+	void selectModeCheckTime();
 
 	// SceneSelectMode을(를) 통해 상속됨
 	void Init() override;

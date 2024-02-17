@@ -44,20 +44,16 @@ void SceneGameSingle::Init()
 	AddGameObject(tree);
 
 	player = new PlayerGo("Player");
-
-
-
 	AddGameObject(player);
 
-
-	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
-	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
-	backgroundGoBee->SetOrigin(Origins::MC);
-	backgroundGoBee->SetPosition({ 1920.f / 2, 800.f });
-	backgroundGoBee->SetBounds(beeMovingBounds);
-	AddGameObject(backgroundGoBee);
-
-
+	for (int i = 1; i <= 2; ++i) {
+		BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
+		backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
+		backgroundGoBee->SetOrigin(Origins::MC);
+		backgroundGoBee->SetPosition({ Utils::RandomRange(0.f, 1920.f), Utils::RandomRange(0.f, 1080.f) });
+		backgroundGoBee->SetBounds(beeMovingBounds);
+		AddGameObject(backgroundGoBee);
+	}
 
 	// UI
 	sf::Vector2f TimebarPos = (sf::Vector2f)FRAMEWORK.GetWindowSize();
@@ -139,6 +135,15 @@ void SceneGameSingle::UpdateAwake(float dt)
 		SCENEMANAGER.PlayBGM();
 	}
 
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectCharacter);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
+	}
+
 	switch (SCENEMANAGER.GetPlayerOneSelect())
 	{
 	case 1:
@@ -157,7 +162,8 @@ void SceneGameSingle::UpdateGame(float dt)
 		SetStatus(Status::Pause);
 		SCENEMANAGER.PauseBGM();
 	}
-	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Left))
 	{
 		timebar->AddTime(50.f);
 
@@ -165,10 +171,6 @@ void SceneGameSingle::UpdateGame(float dt)
 		{
 			timebar->SetRectSize(timebar->GetRectSize());
 		}
-	}
-
-	if (InputManager::GetKeyDown(sf::Keyboard::Left))
-	{
 		tree->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT);
 		player->UpdatePlayerSide(Sides::LEFT);
@@ -187,6 +189,12 @@ void SceneGameSingle::UpdateGame(float dt)
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Right))
 	{
+		timebar->AddTime(50.f);
+
+		if (timebar->GetCurrentRectSize().x >= timebar->GetRectSize().x)
+		{
+			timebar->SetRectSize(timebar->GetRectSize());
+		}
 		tree->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT);
 		player->UpdatePlayerSide(Sides::RIGHT);
@@ -244,14 +252,40 @@ void SceneGameSingle::UpdateGame(float dt)
 
 void SceneGameSingle::UpdateGameOver(float dt)
 {
+	uiIntro->SetText("GAME OVER ^.^");
+	uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
+		Init();
+
 		SetStatus(Status::Game);
 		for (GameObject* obj : gameObjects)
 		{
 			obj->Reset();
 		}
 		SCENEMANAGER.PlayBGM();
+
+		switch (SCENEMANAGER.GetPlayerOneSelect())
+		{
+		case 1:
+			player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		Init();
+
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 	}
 }
 
@@ -285,11 +319,15 @@ void SceneGameSingle::SetStatus(Status newStatus)
 	case SceneGameSingle::Status::Game:
 		FRAMEWORK.SetTimeScale(1.f);
 		uiIntro->SetActive(false);
+		uiScore->SetOrigin(Origins::TL);
+		uiScore->SetPosition({0, 0});
 		break;
 	case SceneGameSingle::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("GAME OVER ^.^");
+		uiScore->SetOrigin(Origins::MC);
+		uiScore->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		break;
 	case SceneGameSingle::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);

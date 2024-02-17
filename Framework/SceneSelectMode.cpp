@@ -21,7 +21,7 @@ void SceneSelectMode::Init()
 	AddGameObject(background);
 
 	pressNumber = new TextGo("pressNumber");
-	pressNumber->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Press Num1 or Num2", 90, sf::Color::White);
+	pressNumber->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Select Game Mode", 90, sf::Color::White);
 	pressNumber->SetOrigin(Origins::MC);
 	pressNumber->SetPosition(FRAMEWORK.GetWindowSize().x / 2, FRAMEWORK.GetWindowSize().y * 0.3f);
 	AddGameObject(pressNumber);
@@ -70,8 +70,25 @@ void SceneSelectMode::Update(float dt)
 {
 	Scene::Update(dt);
 
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneTitle);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
+	}
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 	{
+		num1ForSinglePlay->SetFillColor(sf::Color::Red);
+		num1ForSinglePlay->SetScale({ 1.2f, 1.2f });
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Num1))
+	{
+		num1ForSinglePlay->SetFillColor(sf::Color::White);
+		num1ForSinglePlay->SetScale({ 1.f, 1.f });
 		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetMode(SceneManager::Mod::SINGLE);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
@@ -79,6 +96,14 @@ void SceneSelectMode::Update(float dt)
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Num2))
 	{
+		num2ForDuoPlay->SetFillColor(sf::Color::Red);
+		num2ForDuoPlay->SetScale({ 1.2f, 1.2f });
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Num2))
+	{
+		num2ForDuoPlay->SetFillColor(sf::Color::White);
+		num2ForDuoPlay->SetScale({ 1.f, 1.f });
 		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetMode(SceneManager::Mod::DUO);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
