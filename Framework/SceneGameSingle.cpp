@@ -246,17 +246,29 @@ void SceneGameSingle::UpdateGameOver(float dt)
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		Init();
+
 		SetStatus(Status::Game);
 		for (GameObject* obj : gameObjects)
 		{
 			obj->Reset();
 		}
 		SCENEMANAGER.PlayBGM();
+
+		switch (SCENEMANAGER.GetPlayerOneSelect())
+		{
+		case 1:
+			player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
 	}
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		Init();
+
 		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
 		for (GameObject* obj : gameObjects)
 		{
