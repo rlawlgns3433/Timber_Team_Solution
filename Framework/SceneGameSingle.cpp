@@ -157,7 +157,8 @@ void SceneGameSingle::UpdateGame(float dt)
 		SetStatus(Status::Pause);
 		SCENEMANAGER.PauseBGM();
 	}
-	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Left))
 	{
 		timebar->AddTime(50.f);
 
@@ -165,10 +166,6 @@ void SceneGameSingle::UpdateGame(float dt)
 		{
 			timebar->SetRectSize(timebar->GetRectSize());
 		}
-	}
-
-	if (InputManager::GetKeyDown(sf::Keyboard::Left))
-	{
 		tree->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT);
 		player->UpdatePlayerSide(Sides::LEFT);
@@ -187,6 +184,12 @@ void SceneGameSingle::UpdateGame(float dt)
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Right))
 	{
+		timebar->AddTime(50.f);
+
+		if (timebar->GetCurrentRectSize().x >= timebar->GetRectSize().x)
+		{
+			timebar->SetRectSize(timebar->GetRectSize());
+		}
 		tree->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT);
 		player->UpdatePlayerSide(Sides::RIGHT);
@@ -285,11 +288,15 @@ void SceneGameSingle::SetStatus(Status newStatus)
 	case SceneGameSingle::Status::Game:
 		FRAMEWORK.SetTimeScale(1.f);
 		uiIntro->SetActive(false);
+		uiScore->SetOrigin(Origins::TL);
+		uiScore->SetPosition({0, 0});
 		break;
 	case SceneGameSingle::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
 		uiIntro->SetText("GAME OVER ^.^");
+		uiScore->SetOrigin(Origins::MC);
+		uiScore->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		break;
 	case SceneGameSingle::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
