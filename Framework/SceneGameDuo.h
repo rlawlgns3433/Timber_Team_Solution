@@ -62,5 +62,5 @@ public:
 
 	void SetStatus(Status newStatus);
 
-	void PlayEffectLog(Sides side, const TreeGo* tree);
+	void PlayEffectLog(Sides side);
 };
