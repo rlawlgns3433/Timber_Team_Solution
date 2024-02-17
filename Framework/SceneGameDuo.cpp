@@ -112,6 +112,19 @@ void SceneGameDuo::Enter()
 void SceneGameDuo::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
+
+	uiScore1->SetOrigin(Origins::TL);
+	uiScore1->SetPosition(0, 0);
+	uiScore2->SetOrigin(Origins::TL);
+	uiScore2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.5f ,0 });
+
+	for (auto& effectLog : useEffectList)
+	{
+		effectLog->SetActive(false);
+		unuseEffectList.push_back(effectLog);
+	}
+
+	useEffectList.clear();
 }
 
 void SceneGameDuo::Update(float dt)
@@ -318,8 +331,8 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player2->SetDead();
 		SetStatus(Status::GameOver);
-		uiScore1->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -329,8 +342,8 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player2->SetDead();
 		SetStatus(Status::GameOver);
-		uiScore1->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
@@ -388,8 +401,15 @@ void SceneGameDuo::UpdateGameOver(float dt)
 		uiScore1->SetPosition({ 0,0 });
 		uiScore2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.5f ,0 });
 
-		SCENEMANAGER.PlayBGM();
+		for (auto& effectLog : useEffectList)
+		{
+			effectLog->SetActive(false);
+			unuseEffectList.push_back(effectLog);
+		}
 
+		useEffectList.clear();
+
+		SCENEMANAGER.PlayBGM();
 	}
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
