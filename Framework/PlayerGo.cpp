@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerGo.h"
 
+
 PlayerGo::PlayerGo(const std::string& name)
 	: SpriteGo(name)
 {
@@ -8,16 +9,29 @@ PlayerGo::PlayerGo(const std::string& name)
 
 void PlayerGo::Init()
 {
-	CenterX = FRAMEWORK.GetWindowSize().x / 2;
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)
+	{
+		CenterX = FRAMEWORK.GetWindowSize().x / 2;
 
-	SetOrigin(Origins::BC);
-	SetPosition({ CenterX + playerOffsetX, 600 });
-	SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
+		SetOrigin(Origins::BC);
+		SetPosition({ CenterX + playerOffsetX, 600 });
+		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
 
-	axe.SetActive(true);
-	axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
-	axe.SetFlipX(true);
-	axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
+		axe.SetActive(true);
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetFlipX(true);
+		axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
+	}
+
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::DUO)
+	{
+		SetOrigin(Origins::BC);
+		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
+		axe.SetActive(true);
+		axe.SetFlipX(true);
+		axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
+		//position을 sceneDuo에서 잡아주기
+	}
 }
 
 void PlayerGo::Release()
@@ -26,42 +40,88 @@ void PlayerGo::Release()
 
 void PlayerGo::Reset()
 {
-	isDead = false;
-	SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
-	SetPosition({ CenterX + playerOffsetX, 600 });
-	SetFlipX(false);
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)
+	{
+		isDead = false;
+		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
+		SetPosition({ CenterX + playerOffsetX, 600 });
+		SetFlipX(false);
 
-	axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
-	axe.SetFlipX(true);
-	state = PlayerState::ALIVE;
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetFlipX(true);
+		state = PlayerState::ALIVE;
+	}
+
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::DUO)
+	{
+		isDead = false;
+		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
+		SetFlipX(false);
+
+		axe.SetFlipX(true);
+		state = PlayerState::ALIVE;
+	}
 }
 
 void PlayerGo::Update(float dt)
 {
-	if (playerSide == Sides::LEFT)
+	//Single Mode
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)
 	{
-		SetPosition({ CenterX - playerOffsetX, 600 });
-		axe.SetPosition({ CenterX - playerOffsetX - 20, 720 });
-		axe.SetFlipX(false);
-		axe.SetSide(Sides::LEFT);
-		SetFlipX(true);
-	}
-	else if (playerSide == Sides::RIGHT)
-	{
-		SetPosition({ CenterX + playerOffsetX, 600 });
-		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
-		axe.SetFlipX(true);
-		axe.SetSide(Sides::RIGHT);
-		SetFlipX(false);
+		if (playerSide == Sides::LEFT)
+		{
+			SetPosition({ CenterX - playerOffsetX, 600 });
+			axe.SetPosition({ CenterX - playerOffsetX - 20, 720 });
+			axe.SetFlipX(false);
+			axe.SetSide(Sides::LEFT);
+			SetFlipX(true);
+		}
+		else if (playerSide == Sides::RIGHT)
+		{
+			SetPosition({ CenterX + playerOffsetX, 600 });
+			axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+			axe.SetFlipX(true);
+			axe.SetSide(Sides::RIGHT);
+			SetFlipX(false);
+		}
+
+		if (isAxeActive) axe.SetActive(true);
+		else axe.SetActive(false);
+
+		if (state == PlayerState::DEAD)
+		{
+			axe.SetActive(false);
+		}
 	}
 
-	if (isAxeActive) axe.SetActive(true);
-	else axe.SetActive(false);
-
-	if (state == PlayerState::DEAD)
+	//Duo Mode
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::DUO)
 	{
-		axe.SetActive(false);
+		if (playerSide == Sides::LEFT)
+		{
+			axe.SetPosition({ GetPosition().x - playerOffsetX - 20.f, 720.f});
+			axe.SetFlipX(true);
+			axe.SetSide(Sides::LEFT);
+			SetFlipX(true);
+		}
+		else if (playerSide == Sides::RIGHT)
+		{
+			axe.SetPosition({ GetPosition().x + playerOffsetX + 20.f, 720.f });
+			axe.SetFlipX(false);
+			axe.SetSide(Sides::RIGHT);
+			SetFlipX(false);
+		}
+
+		if (isAxeActive) axe.SetActive(true);
+		else axe.SetActive(false);
+
+		if (state == PlayerState::DEAD)
+		{
+			axe.SetActive(false);
+		}
 	}
+
+
 }
 
 void PlayerGo::Draw(sf::RenderWindow& window)
