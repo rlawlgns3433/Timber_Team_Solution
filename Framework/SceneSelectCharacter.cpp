@@ -101,6 +101,18 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 	}
 	else                                                                 //2인 모드 2번 선택
 	{
+		SelectText = new TextGo("Num1 Character");
+		SelectText->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Num9 : Old WoodCutter", 30, sf::Color::Black);
+		SelectText->SetOrigin(Origins::MC);
+		SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.3, FRAMEWORK.GetWindowSize().y * 0.8);
+		AddGameObject(SelectText);
+
+		SelectText = new TextGo("Num2 Character");
+		SelectText->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Num0 : young WoodCutter", 30, sf::Color::Black);
+		SelectText->SetOrigin(Origins::MC);
+		SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.7, FRAMEWORK.GetWindowSize().y * 0.8);
+		AddGameObject(SelectText);
+
 		if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 		{
 			spritePlayer1->SetScale({ 1.5f, 1.5f });
