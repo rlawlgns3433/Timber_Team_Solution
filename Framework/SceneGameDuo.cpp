@@ -210,7 +210,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	}
 	
 	/////////////////////////////player1/////////////////////////////////////
-	if (InputManager::GetKeyDown(sf::Keyboard::A) && !(int)player1->IsDead())
+	if (InputManager::GetKeyDown(sf::Keyboard::A))
 	{
 		timebar1->AddTime(50.f);
 		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
@@ -229,12 +229,12 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::A) && !(int)player1->IsDead())
+	if (InputManager::GetKeyUp(sf::Keyboard::A))
 	{
 		player1->SetAxeActive(false);
 	}
 
-	if (InputManager::GetKeyDown(sf::Keyboard::D) && !(int)player1->IsDead())
+	if (InputManager::GetKeyDown(sf::Keyboard::D))
 	{
 		timebar1->AddTime(50.f);
 		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
@@ -254,7 +254,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::D) && !(int)player1->IsDead())
+	if (InputManager::GetKeyUp(sf::Keyboard::D))
 	{
 		player1->SetAxeActive(false);
 	}
@@ -283,7 +283,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	}
 
 	////////////////////////player2///////////////////////////////
-	if (InputManager::GetKeyDown(sf::Keyboard::Left) && !(int)player2->IsDead())
+	if (InputManager::GetKeyDown(sf::Keyboard::Left))
 	{
 		timebar2->AddTime(50.f);
 		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
@@ -302,12 +302,12 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Left) && !(int)player2->IsDead())
+	if (InputManager::GetKeyUp(sf::Keyboard::Left))
 	{
 		player2->SetAxeActive(false);
 	}
 
-	if (InputManager::GetKeyDown(sf::Keyboard::Right) && !(int)player2->IsDead())
+	if (InputManager::GetKeyDown(sf::Keyboard::Right))
 	{
 		timebar2->AddTime(50.f);
 		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
@@ -327,7 +327,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Right) && !(int)player2->IsDead())
+	if (InputManager::GetKeyUp(sf::Keyboard::Right))
 	{
 		player2->SetAxeActive(false);
 	}

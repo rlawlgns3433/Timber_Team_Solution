@@ -83,41 +83,15 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 			obj->Reset();
 		}
 	}
-
-	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)             //1인 모드         
+	if (SCENEMANAGER.GetMode() == SceneManager::Mod::DUO)            //2인 모드 2번 선택 시 텍스트 출력
 	{
-		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    
-		{
-			spritePlayer1->SetScale({ 1.5f, 1.5f });
-		}
-		if (InputManager::GetKeyUp(sf::Keyboard::Num1))
-		{
-			SCENEMANAGER.StopBGM();
-			SCENEMANAGER.SetPlayerOneSelect(1);
-			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
-		}
-
-		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
-		{
-			spritePlayer2->SetScale({ 1.5f, 1.5f });
-		}
-		if (InputManager::GetKeyUp(sf::Keyboard::Num2))
-		{
-			SCENEMANAGER.StopBGM();
-			SCENEMANAGER.SetPlayerOneSelect(2);
-			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
-		}
-		
-	}
-	else                                                                 //2인 모드 2번 선택
-	{
-		SelectText = new TextGo("Num1 Character");
+		SelectText = new TextGo("Num9 Character");
 		SelectText->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Num9 : Old WoodCutter", 30, sf::Color::Black);
 		SelectText->SetOrigin(Origins::MC);
 		SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.3, FRAMEWORK.GetWindowSize().y * 0.8);
 		AddGameObject(SelectText);
 
-		SelectText = new TextGo("Num2 Character");
+		SelectText = new TextGo("Num0 Character");
 		SelectText->Set(*fontManager.GetResource("fonts/KOMIKAP_.ttf"), "Num0 : young WoodCutter", 30, sf::Color::Black);
 		SelectText->SetOrigin(Origins::MC);
 		SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.7, FRAMEWORK.GetWindowSize().y * 0.8);
@@ -169,10 +143,39 @@ void SceneSelectCharacter::Update(float dt)                              //1번 o
 		if (playerOneSelectCharacter != PlayerSelectCharacter::None
 			&& playerTwoSelectCharacter != PlayerSelectCharacter::None)
 		{
+
 			SCENEMANAGER.StopBGM();
 			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameDuo);
 		}
 
+	}
+	else                                                              //1인 모드         
+	{
+		RemoveGameObject(FindGameObject("Num0 Character"));           
+		RemoveGameObject(FindGameObject("Num9 Character"));           
+
+		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    
+		{
+			spritePlayer1->SetScale({ 1.5f, 1.5f });
+		}
+		if (InputManager::GetKeyUp(sf::Keyboard::Num1))
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(1);
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+		}
+
+		if (InputManager::GetKeyDown(sf::Keyboard::Num2))
+		{
+			spritePlayer2->SetScale({ 1.5f, 1.5f });
+		}
+		if (InputManager::GetKeyUp(sf::Keyboard::Num2))
+		{
+			SCENEMANAGER.StopBGM();
+			SCENEMANAGER.SetPlayerOneSelect(2);
+			SceneManager::Instance().ChangeScene(SceneIDs::SceneGameSingle);
+		}
+		
 	}
 	
 }
