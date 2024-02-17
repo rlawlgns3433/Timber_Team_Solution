@@ -70,6 +70,7 @@ void SceneSelectMode::Update(float dt)
 {
 	Scene::Update(dt);
 
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 	{
 		num1ForSinglePlay->SetFillColor(sf::Color::Red);

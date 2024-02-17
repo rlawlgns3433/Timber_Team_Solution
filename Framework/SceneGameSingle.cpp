@@ -245,21 +245,15 @@ void SceneGameSingle::UpdateGameOver(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
+		Init();
 		SetStatus(Status::Game);
-		for (GameObject* obj : gameObjects)
-		{
-			obj->Reset();
-		}
 		SCENEMANAGER.PlayBGM();
 	}
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
+		Init();
 		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
-		for (GameObject* obj : gameObjects)
-		{
-			obj->Reset();
-		}
 	}
 }
 
