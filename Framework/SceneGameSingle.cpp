@@ -49,13 +49,15 @@ void SceneGameSingle::Init()
 
 	AddGameObject(player);
 
+	for (int i = 1; i <= 2; ++i) {
+		BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
+		backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
+		backgroundGoBee->SetOrigin(Origins::MC);
+		backgroundGoBee->SetPosition({ Utils::RandomRange(0.f, 1920.f), Utils::RandomRange(0.f, 1080.f) });
+		backgroundGoBee->SetBounds(beeMovingBounds);
+		AddGameObject(backgroundGoBee);
+	}
 
-	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
-	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
-	backgroundGoBee->SetOrigin(Origins::MC);
-	backgroundGoBee->SetPosition({ 1920.f / 2, 800.f });
-	backgroundGoBee->SetBounds(beeMovingBounds);
-	AddGameObject(backgroundGoBee);
 
 
 
