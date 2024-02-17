@@ -44,9 +44,6 @@ void SceneGameSingle::Init()
 	AddGameObject(tree);
 
 	player = new PlayerGo("Player");
-
-
-
 	AddGameObject(player);
 
 	for (int i = 1; i <= 2; ++i) {
@@ -57,9 +54,6 @@ void SceneGameSingle::Init()
 		backgroundGoBee->SetBounds(beeMovingBounds);
 		AddGameObject(backgroundGoBee);
 	}
-
-
-
 
 	// UI
 	sf::Vector2f TimebarPos = (sf::Vector2f)FRAMEWORK.GetWindowSize();
@@ -257,6 +251,15 @@ void SceneGameSingle::UpdateGameOver(float dt)
 			obj->Reset();
 		}
 		SCENEMANAGER.PlayBGM();
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 	}
 }
 

@@ -78,6 +78,8 @@ void SceneSelectMode::Update(float dt)
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Num1))
 	{
+		num1ForSinglePlay->SetFillColor(sf::Color::White);
+		num1ForSinglePlay->SetScale({ 1.f, 1.f });
 		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetMode(SceneManager::Mod::SINGLE);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
@@ -91,6 +93,8 @@ void SceneSelectMode::Update(float dt)
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Num2))
 	{
+		num2ForDuoPlay->SetFillColor(sf::Color::White);
+		num2ForDuoPlay->SetScale({ 1.f, 1.f });
 		SCENEMANAGER.StopBGM();
 		SCENEMANAGER.SetMode(SceneManager::Mod::DUO);
 		SceneManager::Instance().ChangeScene(SceneIDs::SceneSelectCharacter);
