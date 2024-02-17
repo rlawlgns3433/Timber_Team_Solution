@@ -46,8 +46,11 @@ void SceneGameDuo::Init()
 	AddGameObject(tree1);
 	AddGameObject(tree2);
 
+
 	player1 = new PlayerGo("Player1");
 	player2 = new PlayerGo("Player2");
+	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
+	player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
 	AddGameObject(player1);
 	AddGameObject(player2);
 
@@ -134,6 +137,9 @@ void SceneGameDuo::Update(float dt)
 
 void SceneGameDuo::UpdateAwake(float dt)
 {
+	player1->SetPosition({FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f});
+	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f});
+
 	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
@@ -192,6 +198,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT);
 		player1->UpdatePlayerSide(Sides::LEFT);
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 650.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -215,6 +222,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT);
 		player1->UpdatePlayerSide(Sides::RIGHT);
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -260,6 +268,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT);
 		player2->UpdatePlayerSide(Sides::LEFT);
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 650.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
@@ -283,6 +292,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT);
 		player2->UpdatePlayerSide(Sides::RIGHT);
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
