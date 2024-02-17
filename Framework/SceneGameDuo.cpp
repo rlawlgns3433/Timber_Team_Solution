@@ -370,6 +370,23 @@ void SceneGameDuo::UpdateGame(float dt)
 
 void SceneGameDuo::UpdateGameOver(float dt)
 {
+	uiIntro->SetText("GAME OVER ^.^");
+
+	if (uiScore1->GetUnsignedScore() > uiScore2->GetUnsignedScore())
+	{
+		uiIntro->SetText("Player1 Win!");
+	}
+	else if(uiScore1->GetUnsignedScore() < uiScore2->GetUnsignedScore())
+	{
+		uiIntro->SetText("Player2 Win!");
+	}
+	else
+	{
+		uiIntro->SetText("Draw");
+	}
+
+	uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f});
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
@@ -457,7 +474,6 @@ void SceneGameDuo::SetStatus(Status newStatus)
 	case SceneGameDuo::Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiIntro->SetActive(true);
-		uiIntro->SetText("GAME OVER ^.^");
 		break;
 	case SceneGameDuo::Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
