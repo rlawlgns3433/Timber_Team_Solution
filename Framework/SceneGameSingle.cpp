@@ -243,6 +243,9 @@ void SceneGameSingle::UpdateGame(float dt)
 
 void SceneGameSingle::UpdateGameOver(float dt)
 {
+	uiIntro->SetText("GAME OVER ^.^");
+	uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
+
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		Init();
