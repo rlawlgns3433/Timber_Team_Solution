@@ -70,6 +70,14 @@ void SceneSelectMode::Update(float dt)
 {
 	Scene::Update(dt);
 
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneTitle);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
+	}
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 	{

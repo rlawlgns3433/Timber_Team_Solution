@@ -160,6 +160,15 @@ void SceneGameDuo::UpdateAwake(float dt)
 		SCENEMANAGER.PlayBGM();
 	}
 
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectCharacter);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
+	}
+
 	switch (SCENEMANAGER.GetPlayerOneSelect())
 	{
 	case 1:
@@ -451,7 +460,6 @@ void SceneGameDuo::UpdateGameOver(float dt)
 		{
 			obj->Reset();
 		}
-
 	}
 }
 

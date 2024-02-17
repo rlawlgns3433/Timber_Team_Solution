@@ -73,7 +73,17 @@ void SceneSelectCharacter::Exit()
 
 void SceneSelectCharacter::Update(float dt)                              //1번 or 2번 캐릭터 선택 시 화면 전환.
 {
-	Scene::Update(dt);          
+	Scene::Update(dt);
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
+	}
+
 	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)             //1인 모드         
 	{
 		if (InputManager::GetKeyDown(sf::Keyboard::Num1))                    
