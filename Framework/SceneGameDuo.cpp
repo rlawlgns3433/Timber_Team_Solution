@@ -242,8 +242,8 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player1->SetDead();
 		SetStatus(Status::GameOver);
-		uiScore1->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 
 
 		sound.resetBuffer();
@@ -255,8 +255,8 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player1->SetDead();
 		SetStatus(Status::GameOver);
-		uiScore1->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
