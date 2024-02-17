@@ -49,10 +49,6 @@ void SceneSelectCharacter::Init()
 	SelectText->SetOrigin(Origins::MC);
 	SelectText->SetPosition(FRAMEWORK.GetWindowSize().x * 0.7, FRAMEWORK.GetWindowSize().y * 0.8 - 100);
 	AddGameObject(SelectText);
-
-	
-
-
 }
 
 void SceneSelectCharacter::Release()
@@ -69,6 +65,8 @@ void SceneSelectCharacter::Enter()
 void SceneSelectCharacter::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
+	playerOneSelectCharacter = PlayerSelectCharacter::None;
+	playerTwoSelectCharacter = PlayerSelectCharacter::None;
 }
 
 void SceneSelectCharacter::Update(float dt)                              //1번 or 2번 캐릭터 선택 시 화면 전환.
