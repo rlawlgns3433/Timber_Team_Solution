@@ -4,13 +4,6 @@
 
 class PlayerGo : public SpriteGo
 {
-public :
-	enum class PlayerState
-	{
-		NOTSET,
-		ALIVE,
-		DEAD
-	};
 
 protected:
 	PlayerGo(const PlayerGo&)		 	 = delete;

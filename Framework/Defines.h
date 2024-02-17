@@ -40,3 +40,10 @@ enum class PlayerSelectCharacter
 	YoungWoodCutter,
 	COUNT,
 };
+
+enum class PlayerState
+{
+	NOTSET = -1,
+	ALIVE,
+	DEAD
+};

@@ -251,10 +251,9 @@ void SceneGameDuo::UpdateGame(float dt)
 	}
 
 
-	if (player1->GetPlayerSide() == tree1->GetFirstBranch()) // player1 사망 상태 - collide with branch
+	if (player1->GetPlayerSide() == tree1->GetFirstBranch() && !(int)player1->IsDead()) // player1 사망 상태 - collide with branch
 	{
 		player1->SetDead();
-		SetStatus(Status::GameOver);
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 
@@ -262,19 +261,16 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
-		SCENEMANAGER.StopBGM();
 	}
-	if (timebar1->GetCurrentRectSize().x <= 0)				// player1 사망 상태 - timeover
+	if (timebar1->GetCurrentRectSize().x <= 0 && !(int)player1->IsDead())				// player1 사망 상태 - timeover
 	{
 		player1->SetDead();
-		SetStatus(Status::GameOver);
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
-		SCENEMANAGER.StopBGM();
 	}
 
 	////////////////////////player2///////////////////////////////
@@ -327,28 +323,47 @@ void SceneGameDuo::UpdateGame(float dt)
 		player2->SetAxeActive(false);
 	}
 
-	if (player2->GetPlayerSide() == tree2->GetFirstBranch()) // player2 사망 상태 - collide with branch
+	if (player2->GetPlayerSide() == tree2->GetFirstBranch() && !(int)player2->IsDead()) // player2 사망 상태 - collide with branch
 	{
 		player2->SetDead();
-		SetStatus(Status::GameOver);
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
-		SCENEMANAGER.StopBGM();
 	}
-	if (timebar2->GetCurrentRectSize().x <= 0)				// player2 사망 상태 - timeover
+	if (timebar2->GetCurrentRectSize().x <= 0 && !(int)player2->IsDead())				// player2 사망 상태 - timeover
 	{
 		player2->SetDead();
-		SetStatus(Status::GameOver);
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
+	}
+
+
+	// 4가지 case 모두 필요
+	/*
+	player1 player2
+	1		1
+	1		0	// player1 사운드 끄기
+	0		1	// player2 사운드 켜기
+	0		0	// 초기 상태
+	*/
+	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
+	{
+		SetStatus(Status::GameOver);
 		SCENEMANAGER.StopBGM();
 	}
+	/*else if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::ALIVE)
+	{
+		SetStatus(Status::GameOver);
+	}
+	else if (player1->IsDead() == PlayerState::ALIVE && player2->IsDead() == PlayerState::DEAD)
+	{
+		SetStatus(Status::GameOver);
+	}*/
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
