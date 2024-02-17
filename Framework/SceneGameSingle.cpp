@@ -247,6 +247,10 @@ void SceneGameSingle::UpdateGameOver(float dt)
 	{
 		Init();
 		SetStatus(Status::Game);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 		SCENEMANAGER.PlayBGM();
 	}
 
@@ -254,6 +258,10 @@ void SceneGameSingle::UpdateGameOver(float dt)
 	{
 		Init();
 		SCENEMANAGER.ChangeScene(SceneIDs::SceneSelectMode);
+		for (GameObject* obj : gameObjects)
+		{
+			obj->Reset();
+		}
 	}
 }
 
