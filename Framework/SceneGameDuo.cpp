@@ -180,9 +180,15 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar1->SetRectSize(timebar1->GetRectSize());
 		}
 	}
-
-	if (InputManager::GetKeyDown(sf::Keyboard::Left))
+	
+	/////////////////////////////player1/////////////////////////////////////
+	if (InputManager::GetKeyDown(sf::Keyboard::A))
 	{
+		timebar1->AddTime(50.f);
+		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
+		{
+			timebar1->SetRectSize(timebar1->GetRectSize());
+		}
 		tree1->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT);
 		player1->UpdatePlayerSide(Sides::LEFT);
@@ -194,13 +200,18 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Left))
+	if (InputManager::GetKeyUp(sf::Keyboard::A))
 	{
 		player1->SetAxeActive(false);
 	}
 
-	if (InputManager::GetKeyDown(sf::Keyboard::Right))
+	if (InputManager::GetKeyDown(sf::Keyboard::D))
 	{
+		timebar1->AddTime(50.f);
+		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
+		{
+			timebar1->SetRectSize(timebar1->GetRectSize());
+		}
 		tree1->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT);
 		player1->UpdatePlayerSide(Sides::RIGHT);
@@ -213,12 +224,13 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 	}
 
-	if (InputManager::GetKeyUp(sf::Keyboard::Right))
+	if (InputManager::GetKeyUp(sf::Keyboard::D))
 	{
 		player1->SetAxeActive(false);
 	}
 
-	if (player1->GetPlayerSide() == tree1->GetFirstBranch()) // »ç¸Á »óÅÂ - collide with branch
+
+	if (player1->GetPlayerSide() == tree1->GetFirstBranch()) // player1 »ç¸Á »óÅÂ - collide with branch
 	{
 		player1->SetDead();
 		SetStatus(Status::GameOver);
@@ -227,10 +239,76 @@ void SceneGameDuo::UpdateGame(float dt)
 		sound.play();
 		SCENEMANAGER.StopBGM();
 	}
-
-	if (timebar1->GetCurrentRectSize().x <= 0)				// »ç¸Á »óÅÂ - timeover
+	if (timebar1->GetCurrentRectSize().x <= 0)				// player1 »ç¸Á »óÅÂ - timeover
 	{
 		player1->SetDead();
+		SetStatus(Status::GameOver);
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		sound.play();
+		SCENEMANAGER.StopBGM();
+	}
+
+	////////////////////////player2///////////////////////////////
+	if (InputManager::GetKeyDown(sf::Keyboard::Left))
+	{
+		timebar2->AddTime(50.f);
+		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
+		{
+			timebar2->SetRectSize(timebar2->GetRectSize());
+		}
+		tree2->Chop(Sides::LEFT);
+		PlayEffectLog(Sides::LEFT);
+		player2->UpdatePlayerSide(Sides::LEFT);
+		uiScore2->AddScore(10.f);
+		player2->SetAxeActive(true);
+
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		sound.play();
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Left))
+	{
+		player2->SetAxeActive(false);
+	}
+
+	if (InputManager::GetKeyDown(sf::Keyboard::Right))
+	{
+		timebar2->AddTime(50.f);
+		if (timebar2->GetCurrentRectSize().x >= timebar2->GetRectSize().x)
+		{
+			timebar2->SetRectSize(timebar2->GetRectSize());
+		}
+		tree2->Chop(Sides::RIGHT);
+		PlayEffectLog(Sides::RIGHT);
+		player2->UpdatePlayerSide(Sides::RIGHT);
+		uiScore2->AddScore(10.f);
+		player2->SetAxeActive(true);
+
+		sound.resetBuffer();
+
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		sound.play();
+	}
+
+	if (InputManager::GetKeyUp(sf::Keyboard::Right))
+	{
+		player2->SetAxeActive(false);
+	}
+
+	if (player2->GetPlayerSide() == tree2->GetFirstBranch()) // player2 »ç¸Á »óÅÂ - collide with branch
+	{
+		player2->SetDead();
+		SetStatus(Status::GameOver);
+		sound.resetBuffer();
+		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		sound.play();
+		SCENEMANAGER.StopBGM();
+	}
+	if (timebar2->GetCurrentRectSize().x <= 0)				// player2 »ç¸Á »óÅÂ - timeover
+	{
+		player2->SetDead();
 		SetStatus(Status::GameOver);
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
