@@ -99,15 +99,15 @@ void PlayerGo::Update(float dt)
 	{
 		if (playerSide == Sides::LEFT)
 		{
-			axe.SetPosition({ GetPosition().x - playerOffsetX - 20.f, 720.f});
-			axe.SetFlipX(true);
+			axe.SetPosition({ GetPosition().x - 100.f, 770.f});
+			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
 			SetFlipX(true);
 		}
 		else if (playerSide == Sides::RIGHT)
 		{
-			axe.SetPosition({ GetPosition().x + playerOffsetX + 20.f, 720.f });
-			axe.SetFlipX(false);
+			axe.SetPosition({ GetPosition().x + 100.f, 770.f});
+			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
 			SetFlipX(false);
 		}
