@@ -196,7 +196,7 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar1->SetRectSize(timebar1->GetRectSize());
 		}
 		tree1->Chop(Sides::LEFT);
-		PlayEffectLog(Sides::LEFT);
+		PlayEffectLog(Sides::LEFT, tree1);
 		player1->UpdatePlayerSide(Sides::LEFT);
 		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 650.f });
 		uiScore1->AddScore(10.f);
@@ -220,7 +220,7 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar1->SetRectSize(timebar1->GetRectSize());
 		}
 		tree1->Chop(Sides::RIGHT);
-		PlayEffectLog(Sides::RIGHT);
+		PlayEffectLog(Sides::RIGHT, tree1);
 		player1->UpdatePlayerSide(Sides::RIGHT);
 		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
 		uiScore1->AddScore(10.f);
@@ -266,7 +266,7 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar2->SetRectSize(timebar2->GetRectSize());
 		}
 		tree2->Chop(Sides::LEFT);
-		PlayEffectLog(Sides::LEFT);
+		PlayEffectLog(Sides::LEFT, tree2);
 		player2->UpdatePlayerSide(Sides::LEFT);
 		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 650.f });
 		uiScore2->AddScore(10.f);
@@ -290,7 +290,7 @@ void SceneGameDuo::UpdateGame(float dt)
 			timebar2->SetRectSize(timebar2->GetRectSize());
 		}
 		tree2->Chop(Sides::RIGHT);
-		PlayEffectLog(Sides::RIGHT);
+		PlayEffectLog(Sides::RIGHT, tree2);
 		player2->UpdatePlayerSide(Sides::RIGHT);
 		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
 		uiScore2->AddScore(10.f);
@@ -353,6 +353,27 @@ void SceneGameDuo::UpdateGameOver(float dt)
 		{
 			obj->Reset();
 		}
+
+		switch (SCENEMANAGER.GetPlayerOneSelect())
+		{
+		case 1:
+			player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player1->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
+
+		switch (SCENEMANAGER.GetPlayerTwoSelect())
+		{
+		case 1:
+			player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player.png"));
+			break;
+		case 2:
+			player2->SetTexture(*TEXTURE_MANAGER.GetResource("graphics/player2.png"));
+			break;
+		}
+
 		SCENEMANAGER.PlayBGM();
 	}
 }
@@ -401,7 +422,7 @@ void SceneGameDuo::SetStatus(Status newStatus)
 	}
 }
 
-void SceneGameDuo::PlayEffectLog(Sides side)
+void SceneGameDuo::PlayEffectLog(Sides side, const TreeGo* tree)
 {
 	EffectLog* effectLog = nullptr;
 
@@ -420,7 +441,7 @@ void SceneGameDuo::PlayEffectLog(Sides side)
 
 	effectLog->SetActive(true);
 	effectLog->Reset();
-	effectLog->SetPosition({ tree1->GetPosition() });
+	effectLog->SetPosition({ tree->GetPosition() });
 
 	sf::Vector2f velocity({ 700.f, -300.f });
 
