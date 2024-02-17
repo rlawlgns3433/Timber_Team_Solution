@@ -65,6 +65,8 @@ void SceneSelectCharacter::Enter()
 void SceneSelectCharacter::Exit()
 {
 	FRAMEWORK.SetTimeScale(1.f);
+	spritePlayer1->SetScale({1.f, 1.f});
+	spritePlayer2->SetScale({1.f, 1.f});
 	playerOneSelectCharacter = PlayerSelectCharacter::None;
 	playerTwoSelectCharacter = PlayerSelectCharacter::None;
 }
