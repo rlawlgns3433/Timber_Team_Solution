@@ -106,13 +106,13 @@ void SceneSelectCharacter::Update(float dt)                              //1¹ø o
 		if (InputManager::GetKeyDown(sf::Keyboard::Num9)) 
 		{
 			SCENEMANAGER.StopBGM();
-			SCENEMANAGER.SetPlayerOneSelect(1);
+			SCENEMANAGER.SetPlayerTwoSelect(1);
 			playerTwoSelectCharacter = PlayerSelectCharacter::WoodCutter;
 		}
 		if (InputManager::GetKeyDown(sf::Keyboard::Num0))
 		{
 			SCENEMANAGER.StopBGM();
-			SCENEMANAGER.SetPlayerOneSelect(2);
+			SCENEMANAGER.SetPlayerTwoSelect(2);
 			playerTwoSelectCharacter = PlayerSelectCharacter::YoungWoodCutter;
 		}
 
