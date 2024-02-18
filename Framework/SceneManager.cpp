@@ -89,6 +89,7 @@ void SceneManager::LoadAllResources()
 
 void SceneManager::PlayBGM()
 {
+	bgm.setLoop(true);
 	bgm.play();
 }
 
