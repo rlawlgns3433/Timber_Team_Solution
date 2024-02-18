@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\Framework;.;.\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GameObjects;.\Scenes;.\Framework;.;.\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -136,19 +136,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Framework\AxeGo.cpp" />
-    <ClCompile Include="Framework\BranchGo.cpp" />
-    <ClCompile Include="Framework\EffectLog.cpp" />
+    <ClCompile Include="GameObjects\AxeGo.cpp" />
+    <ClCompile Include="GameObjects\BranchGo.cpp" />
+    <ClCompile Include="GameObjects\EffectLog.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
-    <ClCompile Include="Framework\BackgroundCloudGo.cpp" />
-    <ClCompile Include="Framework\BackgroundBeeGo.cpp" />
+    <ClCompile Include="GameObjects\BackgroundCloudGo.cpp" />
+    <ClCompile Include="GameObjects\BackgroundBeeGo.cpp" />
     <ClCompile Include="Framework\BackgroundMovingGo.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
-    <ClCompile Include="Framework\SceneSelectCharacter.cpp" />
-    <ClCompile Include="Framework\SceneSelectMode.cpp" />
-    <ClCompile Include="Framework\SceneGameSingle.cpp" />
-    <ClCompile Include="Framework\SceneManager.cpp" />
+    <ClCompile Include="Scenes\SceneSelectCharacter.cpp" />
+    <ClCompile Include="Scenes\SceneSelectMode.cpp" />
+    <ClCompile Include="Scenes\SceneGameSingle.cpp" />
+    <ClCompile Include="Scenes\SceneManager.cpp" />
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\InputManager.cpp" />
@@ -158,41 +158,41 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Framework\TextGo.cpp" />
-    <ClCompile Include="Framework\UIScore.cpp" />
-    <ClCompile Include="Framework\TimebarGo.cpp" />
-    <ClCompile Include="Framework\PlayerGo.cpp" />
-    <ClCompile Include="Framework\TreeGo.cpp" />
-    <ClCompile Include="Framework\SceneTitle.cpp" />
-    <ClCompile Include="Framework\SceneGameDuo.cpp" />
+    <ClCompile Include="GameObjects\UIScore.cpp" />
+    <ClCompile Include="GameObjects\TimebarGo.cpp" />
+    <ClCompile Include="GameObjects\PlayerGo.cpp" />
+    <ClCompile Include="GameObjects\TreeGo.cpp" />
+    <ClCompile Include="Scenes\SceneTitle.cpp" />
+    <ClCompile Include="Scenes\SceneGameDuo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework\AxeGo.h" />
-    <ClInclude Include="Framework\BranchGo.h" />
-    <ClInclude Include="Framework\EffectLog.h" />
+    <ClInclude Include="GameObjects\AxeGo.h" />
+    <ClInclude Include="GameObjects\BranchGo.h" />
+    <ClInclude Include="GameObjects\EffectLog.h" />
     <ClInclude Include="Framework\Framework.h" />
-    <ClInclude Include="Framework\BackgroundCloudGo.h" />
-    <ClInclude Include="Framework\BackgroundBeeGo.h" />
+    <ClInclude Include="GameObjects\BackgroundCloudGo.h" />
+    <ClInclude Include="GameObjects\BackgroundBeeGo.h" />
     <ClInclude Include="Framework\BackgroundMovingGo.h" />
     <ClInclude Include="Framework\Defines.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Framework\ResourceManager.h" />
     <ClInclude Include="Framework\Scene.h" />
-    <ClInclude Include="Framework\SceneSelectCharacter.h" />
-    <ClInclude Include="Framework\SceneSelectMode.h" />
-    <ClInclude Include="Framework\SceneGameSingle.h" />
-    <ClInclude Include="Framework\SceneManager.h" />
+    <ClInclude Include="Scenes\SceneSelectCharacter.h" />
+    <ClInclude Include="Scenes\SceneSelectMode.h" />
+    <ClInclude Include="Scenes\SceneGameSingle.h" />
+    <ClInclude Include="Scenes\SceneManager.h" />
     <ClInclude Include="Framework\Singleton.h" />
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\InputManager.h" />
     <ClInclude Include="Framework\pch.h" />
     <ClInclude Include="Framework\TextGo.h" />
-    <ClInclude Include="Framework\UIScore.h" />
-    <ClInclude Include="Framework\TimebarGo.h" />
-    <ClInclude Include="Framework\PlayerGo.h" />
-    <ClInclude Include="Framework\TreeGo.h" />
-    <ClInclude Include="Framework\SceneTitle.h" />
-    <ClInclude Include="Framework\SceneGameDuo.h" />
+    <ClInclude Include="GameObjects\UIScore.h" />
+    <ClInclude Include="GameObjects\TimebarGo.h" />
+    <ClInclude Include="GameObjects\PlayerGo.h" />
+    <ClInclude Include="GameObjects\TreeGo.h" />
+    <ClInclude Include="Scenes\SceneTitle.h" />
+    <ClInclude Include="Scenes\SceneGameDuo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

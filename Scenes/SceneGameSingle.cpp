@@ -62,7 +62,7 @@ void SceneGameSingle::Init()
 
 	timebar = new TimebarGo("Timebar");
 	timebar->SetFillColor(sf::Color::Red);
-	timebar->SetPosition(TimebarPos); // GameObject 클래스 함수 호출로 변경 필요
+	timebar->SetPosition(TimebarPos);
 	timebar->SetOrigin(Origins::MC);
 
 	AddGameObject(timebar);

@@ -30,22 +30,22 @@
     <ClCompile Include="Framework\Scene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneManager.cpp">
+    <ClCompile Include="Scenes\SceneManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneSelectCharacter.cpp">
+    <ClCompile Include="Scenes\SceneSelectCharacter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneSelectMode.cpp">
+    <ClCompile Include="Scenes\SceneSelectMode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneGameSingle.cpp">
+    <ClCompile Include="Scenes\SceneGameSingle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\BackgroundBeeGo.cpp">
+    <ClCompile Include="GameObjects\BackgroundBeeGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\BackgroundMovingGo.cpp">
@@ -54,37 +54,40 @@
     <ClCompile Include="Framework\SpriteGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\BackgroundCloudGo.cpp">
+    <ClCompile Include="GameObjects\BackgroundCloudGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\TextGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\UIScore.cpp">
+    <ClCompile Include="GameObjects\UIScore.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Framework.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\TimebarGo.cpp">
+    <ClCompile Include="GameObjects\TimebarGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\AxeGo.cpp">
+    <ClCompile Include="GameObjects\AxeGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\BranchGo.cpp">
+    <ClCompile Include="GameObjects\BranchGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\EffectLog.cpp">
+    <ClCompile Include="GameObjects\EffectLog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\PlayerGo.cpp">
+    <ClCompile Include="GameObjects\PlayerGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\TreeGo.cpp">
+    <ClCompile Include="GameObjects\TreeGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\SceneTitle.cpp">
+    <ClCompile Include="Scenes\SceneTitle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneGameDuo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,22 +113,22 @@
     <ClInclude Include="Framework\Scene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneManager.h">
+    <ClInclude Include="Scenes\SceneManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneSelectCharacter.h">
+    <ClInclude Include="Scenes\SceneSelectCharacter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneSelectMode.h">
+    <ClInclude Include="Scenes\SceneSelectMode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneGameSingle.h">
+    <ClInclude Include="Scenes\SceneGameSingle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\BackgroundBeeGo.h">
+    <ClInclude Include="GameObjects\BackgroundBeeGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\BackgroundMovingGo.h">
@@ -134,37 +137,40 @@
     <ClInclude Include="Framework\SpriteGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\BackgroundCloudGo.h">
+    <ClInclude Include="GameObjects\BackgroundCloudGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\TextGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\UIScore.h">
+    <ClInclude Include="GameObjects\UIScore.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\TimebarGo.h">
+    <ClInclude Include="GameObjects\TimebarGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\AxeGo.h">
+    <ClInclude Include="GameObjects\AxeGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\BranchGo.h">
+    <ClInclude Include="GameObjects\BranchGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\EffectLog.h">
+    <ClInclude Include="GameObjects\EffectLog.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\PlayerGo.h">
+    <ClInclude Include="GameObjects\PlayerGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\TreeGo.h">
+    <ClInclude Include="GameObjects\TreeGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\SceneTitle.h">
+    <ClInclude Include="Scenes\SceneTitle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SceneGameDuo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

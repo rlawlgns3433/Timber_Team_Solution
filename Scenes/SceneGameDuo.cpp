@@ -68,8 +68,8 @@ void SceneGameDuo::Init()
 	timebar2 = new TimebarGo("Timebar2");
 	timebar1->SetFillColor(sf::Color::Red);
 	timebar2->SetFillColor(sf::Color::Red);
-	timebar1->SetPosition(TimebarPos1); // GameObject 클래스 함수 호출로 변경 필요
-	timebar2->SetPosition(TimebarPos2); // GameObject 클래스 함수 호출로 변경 필요
+	timebar1->SetPosition(TimebarPos1);
+	timebar2->SetPosition(TimebarPos2);
 	timebar1->SetOrigin(Origins::MC);
 	timebar2->SetOrigin(Origins::MC);
 
@@ -192,8 +192,6 @@ void SceneGameDuo::UpdateAwake(float dt)
 	}
 }
 
-// TODO : player2에 대한 Action도 모두 추가
-
 void SceneGameDuo::UpdateGame(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
@@ -268,9 +266,6 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		player1->SetPosition({ player1->GetPosition().x, 630 });
 
-		/*uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });*/
-
-
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -280,8 +275,6 @@ void SceneGameDuo::UpdateGame(float dt)
 		player1->SetDead();
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		player1->SetPosition({ player1->GetPosition().x, 630 });
-
-		/*uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });*/
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
@@ -344,7 +337,6 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		player2->SetPosition({ player2->GetPosition().x, 630 });
 
-		/*uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });*/
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -355,35 +347,17 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		player2->SetPosition({ player2->GetPosition().x, 630 });
 
-		/*uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });*/
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
 	}
 
-
-	// 4가지 case 모두 필요
-	/*
-	player1 player2
-	1		1
-	1		0	// player1 사운드 끄기
-	0		1	// player2 사운드 켜기
-	0		0	// 초기 상태
-	*/
 	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
 	{
 		SetStatus(Status::GameOver);
 		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		SCENEMANAGER.StopBGM();
 	}
-	/*else if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::ALIVE)
-	{
-		SetStatus(Status::GameOver);
-	}
-	else if (player1->IsDead() == PlayerState::ALIVE && player2->IsDead() == PlayerState::DEAD)
-	{
-		SetStatus(Status::GameOver);
-	}*/
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
@@ -406,8 +380,6 @@ void SceneGameDuo::UpdateGame(float dt)
 void SceneGameDuo::UpdateGameOver(float dt)
 {
 	uiIntro->SetText("GAME OVER ^.^");
-	//player1->SetPosition({ player1->GetPosition().x, 630 });
-	//player2->SetPosition({ player2->GetPosition().x, 630 });
 
 	if (uiScore1->GetUnsignedScore() > uiScore2->GetUnsignedScore())
 	{

@@ -34,8 +34,8 @@ void SceneManager::Release()
 {
 	for (auto scene : scenes)
 	{
-		scene->Release(); // 씬 모든 내용을 할당 해제
-		delete scene; // 씬 삭제
+		scene->Release();
+		delete scene;
 	}
 	scenes.clear();
 }
