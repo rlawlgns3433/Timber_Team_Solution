@@ -142,5 +142,6 @@ void PlayerGo::UpdatePlayerSide(Sides side)
 void PlayerGo::SetDead()
 {
 	this->state = PlayerState::DEAD;
+	//SetPosition({GetPosition().x, 630}); //1인 모드 한번이라도 움직이고 죽으면 적용 안됨.  //2인 모드에서는 잘됨
 	SetTexture(*TEXTURE_MANAGER.GetResource(ripId));
 }

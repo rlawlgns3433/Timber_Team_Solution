@@ -398,6 +398,8 @@ void SceneGameDuo::UpdateGame(float dt)
 void SceneGameDuo::UpdateGameOver(float dt)
 {
 	uiIntro->SetText("GAME OVER ^.^");
+	player1->SetPosition({ player1->GetPosition().x, 630 });
+	player2->SetPosition({ player2->GetPosition().x, 630 });
 
 	if (uiScore1->GetUnsignedScore() > uiScore2->GetUnsignedScore())
 	{
