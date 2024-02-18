@@ -97,8 +97,10 @@ void SceneSelectCharacter::Update(float dt)                              //캐릭�
 	}
 	if (SCENEMANAGER.GetMode() == SceneManager::Mod::SINGLE)               //1인 모드         
 	{
-		RemoveGameObject(FindGameObject("Num0 Character"));                
-		RemoveGameObject(FindGameObject("Num9 Character"));
+		/*RemoveGameObject(FindGameObject("Num0 Character"));                
+		RemoveGameObject(FindGameObject("Num9 Character"));*/
+		FindGameObject("Num9 Character")->SetActive(false);
+		FindGameObject("Num0 Character")->SetActive(false);
 
 		if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 		{
@@ -125,6 +127,9 @@ void SceneSelectCharacter::Update(float dt)                              //캐릭�
 	}
 	else               //2인 모드 2번 선택 시 텍스트 출력
 	{
+
+		FindGameObject("Num9 Character")->SetActive(true);
+		FindGameObject("Num0 Character")->SetActive(true);
 
 		if (InputManager::GetKeyDown(sf::Keyboard::Num1))
 		{
