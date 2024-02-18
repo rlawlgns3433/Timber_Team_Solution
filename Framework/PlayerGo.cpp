@@ -14,7 +14,7 @@ void PlayerGo::Init()
 		CenterX = FRAMEWORK.GetWindowSize().x / 2;
 
 		SetOrigin(Origins::BC);
-		SetPosition({ CenterX + playerOffsetX, 580 });
+		SetPosition({ CenterX + playerOffsetX, 600 });
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
 
 		axe.SetActive(true);
