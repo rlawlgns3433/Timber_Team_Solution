@@ -263,8 +263,9 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (player1->GetPlayerSide() == tree1->GetFirstBranch() && !(int)player1->IsDead()) // player1 »ç¸Á »óÅÂ - collide with branch
 	{
 		player1->SetDead();
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		player1->SetPosition({ player1->GetPosition().x, 630 });
+		timebar1->SetRectSize({ 0, timebar1->GetCurrentRectSize().y });
+
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
@@ -273,7 +274,6 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (timebar1->GetCurrentRectSize().x <= 0 && !(int)player1->IsDead())				// player1 »ç¸Á »óÅÂ - timeover
 	{
 		player1->SetDead();
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
 		player1->SetPosition({ player1->GetPosition().x, 630 });
 
 		sound.resetBuffer();
@@ -334,8 +334,9 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (player2->GetPlayerSide() == tree2->GetFirstBranch() && !(int)player2->IsDead()) // player2 »ç¸Á »óÅÂ - collide with branch
 	{
 		player2->SetDead();
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		
 		player2->SetPosition({ player2->GetPosition().x, 630 });
+		timebar2->SetRectSize({ 0, timebar2->GetCurrentRectSize().y});
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
@@ -344,7 +345,6 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (timebar2->GetCurrentRectSize().x <= 0 && !(int)player2->IsDead())				// player2 »ç¸Á »óÅÂ - timeover
 	{
 		player2->SetDead();
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		player2->SetPosition({ player2->GetPosition().x, 630 });
 
 		sound.resetBuffer();
@@ -356,6 +356,8 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		SetStatus(Status::GameOver);
 		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		SCENEMANAGER.StopBGM();
 	}
 
