@@ -26,6 +26,7 @@ void SceneGameDuo::Init()
 	AddGameObject(spriteGoBackground);
 
 	sf::FloatRect cloudMovingBounds({ -200.f, 0 }, { 1920.f + 400, 600.f });
+	sf::FloatRect beeMovingBounds({ 0.f, 540.f }, { 1920.f, 1080.f });
 
 	for (int i = 1; i <= 3; ++i) {
 		BackgroundCloudGo* backgroundGoCloud = new BackgroundCloudGo("Cloud" + std::to_string(i));
@@ -55,6 +56,13 @@ void SceneGameDuo::Init()
 	player2->SetPosition(playerPos2);
 	AddGameObject(player1);
 	AddGameObject(player2);
+
+	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
+	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
+	backgroundGoBee->SetOrigin(Origins::MC);
+	backgroundGoBee->SetPosition({ Utils::RandomRange(0.f, 1920.f), Utils::RandomRange(0.f, 1080.f) });
+	backgroundGoBee->SetBounds(beeMovingBounds);
+	AddGameObject(backgroundGoBee);
 
 	// UI
 	sf::Vector2f TimebarPos1 = (sf::Vector2f)FRAMEWORK.GetWindowSize();
