@@ -37,7 +37,7 @@ void SceneGameSingle::Init()
 		AddGameObject(backgroundGoCloud);
 	}
 
-	sf::Vector2f treePos({ 960, 800 });
+	sf::Vector2f treePos({ 960, 760 });
 
 	tree = new TreeGo("Tree");
 	tree->SetPosition(treePos);

@@ -14,7 +14,7 @@ void PlayerGo::Init()
 		CenterX = FRAMEWORK.GetWindowSize().x / 2;
 
 		SetOrigin(Origins::BC);
-		SetPosition({ CenterX + playerOffsetX, 600 });
+		SetPosition({ CenterX + playerOffsetX, 580 });
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
 
 		axe.SetActive(true);
@@ -44,7 +44,7 @@ void PlayerGo::Reset()
 	{
 		isDead = false;
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
-		SetPosition({ CenterX + playerOffsetX, 600 });
+		SetPosition({ CenterX + playerOffsetX, 580 });
 		SetFlipX(false);
 
 		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
@@ -70,7 +70,7 @@ void PlayerGo::Update(float dt)
 	{
 		if (playerSide == Sides::LEFT)
 		{
-			SetPosition({ CenterX - playerOffsetX, 600 });
+			SetPosition({ CenterX - playerOffsetX, 580 });
 			axe.SetPosition({ CenterX - playerOffsetX - 20, 720 });
 			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
@@ -78,7 +78,7 @@ void PlayerGo::Update(float dt)
 		}
 		else if (playerSide == Sides::RIGHT)
 		{
-			SetPosition({ CenterX + playerOffsetX, 600 });
+			SetPosition({ CenterX + playerOffsetX, 580 });
 			axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
 			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
