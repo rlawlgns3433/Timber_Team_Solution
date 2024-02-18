@@ -363,6 +363,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
 	{
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		SCENEMANAGER.StopBGM();
 	}
 	/*else if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::ALIVE)
