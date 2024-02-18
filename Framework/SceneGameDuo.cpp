@@ -36,8 +36,8 @@ void SceneGameDuo::Init()
 		AddGameObject(backgroundGoCloud);
 	}
 
-	sf::Vector2f treePos1({ FRAMEWORK.GetWindowSize().x * 0.3f, 800});
-	sf::Vector2f treePos2({ FRAMEWORK.GetWindowSize().x * 0.7f, 800});
+	sf::Vector2f treePos1({ FRAMEWORK.GetWindowSize().x * 0.3f, 760});
+	sf::Vector2f treePos2({ FRAMEWORK.GetWindowSize().x * 0.7f, 760});
 
 	tree1 = new TreeGo("Tree1");
 	tree2 = new TreeGo("Tree2");
@@ -49,8 +49,8 @@ void SceneGameDuo::Init()
 
 	player1 = new PlayerGo("Player1");
 	player2 = new PlayerGo("Player2");
-	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
-	player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
+	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 580.f });
+	player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 580.f });
 	AddGameObject(player1);
 	AddGameObject(player2);
 
@@ -150,8 +150,8 @@ void SceneGameDuo::Update(float dt)
 
 void SceneGameDuo::UpdateAwake(float dt)
 {
-	player1->SetPosition({FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f});
-	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f});
+	player1->SetPosition({FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 580.f});
+	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 580.f});
 
 	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
@@ -220,7 +220,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT, tree1);
 		player1->UpdatePlayerSide(Sides::LEFT);
-		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 650.f });
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 580.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -244,7 +244,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT, tree1);
 		player1->UpdatePlayerSide(Sides::RIGHT);
-		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 580.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
@@ -264,7 +264,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player1->SetDead();
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		/*uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });*/
 
 
 		sound.resetBuffer();
@@ -275,7 +275,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player1->SetDead();
 		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		/*uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });*/
 
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
@@ -293,7 +293,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT, tree2);
 		player2->UpdatePlayerSide(Sides::LEFT);
-		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 650.f });
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 580.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
@@ -317,7 +317,7 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT, tree2);
 		player2->UpdatePlayerSide(Sides::RIGHT);
-		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 580.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
@@ -336,7 +336,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player2->SetDead();
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		/*uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });*/
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -345,7 +345,7 @@ void SceneGameDuo::UpdateGame(float dt)
 	{
 		player2->SetDead();
 		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		/*uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });*/
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
