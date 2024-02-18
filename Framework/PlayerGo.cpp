@@ -18,7 +18,7 @@ void PlayerGo::Init()
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
 
 		axe.SetActive(true);
-		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 		axe.SetFlipX(true);
 		axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
 	}
@@ -47,7 +47,7 @@ void PlayerGo::Reset()
 		SetPosition({ CenterX + playerOffsetX, 580 });
 		SetFlipX(false);
 
-		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 		axe.SetFlipX(true);
 		state = PlayerState::ALIVE;
 	}
@@ -71,7 +71,7 @@ void PlayerGo::Update(float dt)
 		if (playerSide == Sides::LEFT)
 		{
 			SetPosition({ CenterX - playerOffsetX, 580 });
-			axe.SetPosition({ CenterX - playerOffsetX - 20, 720 });
+			axe.SetPosition({ CenterX - playerOffsetX - 20, 700 });
 			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
 			SetFlipX(true);
@@ -79,7 +79,7 @@ void PlayerGo::Update(float dt)
 		else if (playerSide == Sides::RIGHT)
 		{
 			SetPosition({ CenterX + playerOffsetX, 580 });
-			axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+			axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
 			SetFlipX(false);
@@ -99,14 +99,14 @@ void PlayerGo::Update(float dt)
 	{
 		if (playerSide == Sides::LEFT)
 		{
-			axe.SetPosition({ GetPosition().x - 100.f, 770.f});
+			axe.SetPosition({ GetPosition().x - 100.f, 700.f});
 			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
 			SetFlipX(true);
 		}
 		else if (playerSide == Sides::RIGHT)
 		{
-			axe.SetPosition({ GetPosition().x + 100.f, 770.f});
+			axe.SetPosition({ GetPosition().x + 100.f, 700.f});
 			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
 			SetFlipX(false);
