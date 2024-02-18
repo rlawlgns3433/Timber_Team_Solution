@@ -207,15 +207,6 @@ void SceneGameDuo::UpdateGame(float dt)
 		SetStatus(Status::Pause);
 		SCENEMANAGER.PauseBGM();
 	}
-	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
-	{
-		timebar1->AddTime(50.f);
-
-		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
-		{
-			timebar1->SetRectSize(timebar1->GetRectSize());
-		}
-	}
 	
 	/////////////////////////////player1/////////////////////////////////////
 	if (InputManager::GetKeyDown(sf::Keyboard::A) && !(int)player1->IsDead())
