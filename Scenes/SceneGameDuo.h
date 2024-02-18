@@ -38,7 +38,10 @@ public :
 	PlayerGo* player1 = nullptr;
 	PlayerGo* player2 = nullptr;
 
-	sf::Sound sound;
+	//sf::Sound sound;
+	sf::Sound chopSound;
+	sf::Sound deathSound;
+	sf::Sound outOfTimeSound;
 
 	std::list<EffectLog*> useEffectList;
 	std::list<EffectLog*> unuseEffectList;

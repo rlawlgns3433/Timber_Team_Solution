@@ -224,9 +224,9 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::A) && !(int)player1->IsDead())
@@ -248,10 +248,9 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
-		sound.resetBuffer();
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::D) && !(int)player1->IsDead())
@@ -267,18 +266,18 @@ void SceneGameDuo::UpdateGame(float dt)
 		timebar1->SetRectSize({ 0, timebar1->GetCurrentRectSize().y });
 
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
-		sound.play();
+		deathSound.resetBuffer();
+		deathSound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		deathSound.play();
 	}
 	if (timebar1->GetCurrentRectSize().x <= 0 && !(int)player1->IsDead())				// player1 »ç¸Á »óÅÂ - timeover
 	{
 		player1->SetDead();
 		player1->SetPosition({ player1->GetPosition().x, 630 });
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
-		sound.play();
+		outOfTimeSound.resetBuffer();
+		outOfTimeSound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		outOfTimeSound.play();
 	}
 
 	////////////////////////player2///////////////////////////////
@@ -296,9 +295,9 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Left) && !(int)player2->IsDead())
@@ -320,10 +319,9 @@ void SceneGameDuo::UpdateGame(float dt)
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
-		sound.resetBuffer();
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Right) && !(int)player2->IsDead())
@@ -338,18 +336,18 @@ void SceneGameDuo::UpdateGame(float dt)
 		player2->SetPosition({ player2->GetPosition().x, 630 });
 		timebar2->SetRectSize({ 0, timebar2->GetCurrentRectSize().y});
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
-		sound.play();
+		deathSound.resetBuffer();
+		deathSound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		deathSound.play();
 	}
 	if (timebar2->GetCurrentRectSize().x <= 0 && !(int)player2->IsDead())				// player2 »ç¸Á »óÅÂ - timeover
 	{
 		player2->SetDead();
 		player2->SetPosition({ player2->GetPosition().x, 630 });
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
-		sound.play();
+		outOfTimeSound.resetBuffer();
+		outOfTimeSound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		outOfTimeSound.play();
 	}
 
 	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
