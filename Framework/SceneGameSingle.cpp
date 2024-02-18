@@ -216,6 +216,7 @@ void SceneGameSingle::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -226,6 +227,7 @@ void SceneGameSingle::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
