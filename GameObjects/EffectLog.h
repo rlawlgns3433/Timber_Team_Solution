@@ -14,7 +14,7 @@ protected:
 
 public:
 	// protected 멤버로 이동 필요
-	float duration = 0.5f;
+	float duration = 3.f;
 	float timer = 0.f;
 
 	EffectLog(const std::string& name = "");
