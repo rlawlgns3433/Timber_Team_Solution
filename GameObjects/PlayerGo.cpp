@@ -18,7 +18,7 @@ void PlayerGo::Init()
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
 
 		axe.SetActive(true);
-		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 		axe.SetFlipX(true);
 		axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
 	}
@@ -30,7 +30,6 @@ void PlayerGo::Init()
 		axe.SetActive(true);
 		axe.SetFlipX(true);
 		axe.SetTexture(*TEXTURE_MANAGER.GetResource(axeId));
-		//position을 sceneDuo에서 잡아주기
 	}
 }
 
@@ -44,10 +43,10 @@ void PlayerGo::Reset()
 	{
 		isDead = false;
 		SetTexture(*TEXTURE_MANAGER.GetResource(playerId));
-		SetPosition({ CenterX + playerOffsetX, 600 });
+		SetPosition({ CenterX + playerOffsetX, 580 });
 		SetFlipX(false);
 
-		axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+		axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 		axe.SetFlipX(true);
 		state = PlayerState::ALIVE;
 	}
@@ -70,16 +69,16 @@ void PlayerGo::Update(float dt)
 	{
 		if (playerSide == Sides::LEFT)
 		{
-			SetPosition({ CenterX - playerOffsetX, 600 });
-			axe.SetPosition({ CenterX - playerOffsetX - 20, 720 });
+			SetPosition({ CenterX - playerOffsetX, 580 });
+			axe.SetPosition({ CenterX - playerOffsetX - 20, 700 });
 			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
 			SetFlipX(true);
 		}
 		else if (playerSide == Sides::RIGHT)
 		{
-			SetPosition({ CenterX + playerOffsetX, 600 });
-			axe.SetPosition({ CenterX + playerOffsetX + 20, 720 });
+			SetPosition({ CenterX + playerOffsetX, 580 });
+			axe.SetPosition({ CenterX + playerOffsetX + 20, 700 });
 			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
 			SetFlipX(false);
@@ -99,14 +98,14 @@ void PlayerGo::Update(float dt)
 	{
 		if (playerSide == Sides::LEFT)
 		{
-			axe.SetPosition({ GetPosition().x - 100.f, 770.f});
+			axe.SetPosition({ GetPosition().x - 20, 700.f});
 			axe.SetFlipX(false);
 			axe.SetSide(Sides::LEFT);
 			SetFlipX(true);
 		}
 		else if (playerSide == Sides::RIGHT)
 		{
-			axe.SetPosition({ GetPosition().x + 100.f, 770.f});
+			axe.SetPosition({ GetPosition().x + 20, 700.f});
 			axe.SetFlipX(true);
 			axe.SetSide(Sides::RIGHT);
 			SetFlipX(false);

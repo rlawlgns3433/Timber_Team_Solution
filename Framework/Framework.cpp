@@ -10,8 +10,6 @@ void Framework::Init(int width, int height, const std::string& name)
 
     window.create(sf::VideoMode(windowSize.x, windowSize.y), name);
 
-    window.setFramerateLimit(60);
-
     SCENEMANAGER.Init();
 }
 

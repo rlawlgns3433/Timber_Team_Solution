@@ -37,7 +37,7 @@ void SceneGameSingle::Init()
 		AddGameObject(backgroundGoCloud);
 	}
 
-	sf::Vector2f treePos({ 960, 800 });
+	sf::Vector2f treePos({ 960, 760 });
 
 	tree = new TreeGo("Tree");
 	tree->SetPosition(treePos);
@@ -62,7 +62,7 @@ void SceneGameSingle::Init()
 
 	timebar = new TimebarGo("Timebar");
 	timebar->SetFillColor(sf::Color::Red);
-	timebar->SetPosition(TimebarPos); // GameObject 클래스 함수 호출로 변경 필요
+	timebar->SetPosition(TimebarPos);
 	timebar->SetOrigin(Origins::MC);
 
 	AddGameObject(timebar);
@@ -216,6 +216,7 @@ void SceneGameSingle::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
 		sound.play();
@@ -226,6 +227,7 @@ void SceneGameSingle::UpdateGame(float dt)
 	{
 		player->SetDead();
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
 		sound.resetBuffer();
 		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
 		sound.play();
@@ -254,7 +256,7 @@ void SceneGameSingle::UpdateGameOver(float dt)
 {
 	uiIntro->SetText("GAME OVER ^.^");
 	uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
-
+	player->SetPosition({ player->GetPosition().x, 630 });
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
 		Init();

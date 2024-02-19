@@ -20,7 +20,7 @@ protected:
 	bool isAxeActive = false;
 
 	float CenterX;
-	float playerOffsetX = 200.f;
+	float playerOffsetX = 150.f;
 
 	std::string playerId = "graphics/player.png";
 	std::string ripId = "graphics/rip.png";

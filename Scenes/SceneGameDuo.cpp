@@ -26,6 +26,7 @@ void SceneGameDuo::Init()
 	AddGameObject(spriteGoBackground);
 
 	sf::FloatRect cloudMovingBounds({ -200.f, 0 }, { 1920.f + 400, 600.f });
+	sf::FloatRect beeMovingBounds({ 0.f, 540.f }, { 1920.f, 1080.f });
 
 	for (int i = 1; i <= 3; ++i) {
 		BackgroundCloudGo* backgroundGoCloud = new BackgroundCloudGo("Cloud" + std::to_string(i));
@@ -36,8 +37,8 @@ void SceneGameDuo::Init()
 		AddGameObject(backgroundGoCloud);
 	}
 
-	sf::Vector2f treePos1({ FRAMEWORK.GetWindowSize().x * 0.3f, 800});
-	sf::Vector2f treePos2({ FRAMEWORK.GetWindowSize().x * 0.7f, 800});
+	sf::Vector2f treePos1({ FRAMEWORK.GetWindowSize().x * 0.3f, 760});
+	sf::Vector2f treePos2({ FRAMEWORK.GetWindowSize().x * 0.7f, 760});
 
 	tree1 = new TreeGo("Tree1");
 	tree2 = new TreeGo("Tree2");
@@ -46,13 +47,22 @@ void SceneGameDuo::Init()
 	AddGameObject(tree1);
 	AddGameObject(tree2);
 
+	sf::Vector2f playerPos1({ treePos1.x + 150.f, 580.f });
+	sf::Vector2f playerPos2({ treePos2.x + 150.f, 580.f });
 
 	player1 = new PlayerGo("Player1");
 	player2 = new PlayerGo("Player2");
-	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
-	player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
+	player1->SetPosition(playerPos1);
+	player2->SetPosition(playerPos2);
 	AddGameObject(player1);
 	AddGameObject(player2);
+
+	BackgroundBeeGo* backgroundGoBee = new BackgroundBeeGo("Bee");
+	backgroundGoBee->SetTexture(*textureManager.GetResource("graphics/bee.png"));
+	backgroundGoBee->SetOrigin(Origins::MC);
+	backgroundGoBee->SetPosition({ Utils::RandomRange(0.f, 1920.f), Utils::RandomRange(0.f, 1080.f) });
+	backgroundGoBee->SetBounds(beeMovingBounds);
+	AddGameObject(backgroundGoBee);
 
 	// UI
 	sf::Vector2f TimebarPos1 = (sf::Vector2f)FRAMEWORK.GetWindowSize();
@@ -66,8 +76,8 @@ void SceneGameDuo::Init()
 	timebar2 = new TimebarGo("Timebar2");
 	timebar1->SetFillColor(sf::Color::Red);
 	timebar2->SetFillColor(sf::Color::Red);
-	timebar1->SetPosition(TimebarPos1); // GameObject 클래스 함수 호출로 변경 필요
-	timebar2->SetPosition(TimebarPos2); // GameObject 클래스 함수 호출로 변경 필요
+	timebar1->SetPosition(TimebarPos1);
+	timebar2->SetPosition(TimebarPos2);
 	timebar1->SetOrigin(Origins::MC);
 	timebar2->SetOrigin(Origins::MC);
 
@@ -150,8 +160,8 @@ void SceneGameDuo::Update(float dt)
 
 void SceneGameDuo::UpdateAwake(float dt)
 {
-	player1->SetPosition({FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f});
-	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f});
+	player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 150.f, 580.f });
+	player2->SetPosition({FRAMEWORK.GetWindowSize().x * 0.7f + 150.f, 580.f});
 
 	SCENEMANAGER.PauseBGM();
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
@@ -190,23 +200,12 @@ void SceneGameDuo::UpdateAwake(float dt)
 	}
 }
 
-// TODO : player2에 대한 Action도 모두 추가
-
 void SceneGameDuo::UpdateGame(float dt)
 {
 	if (InputManager::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SetStatus(Status::Pause);
 		SCENEMANAGER.PauseBGM();
-	}
-	if (InputManager::GetKeyDown(sf::Keyboard::LControl))
-	{
-		timebar1->AddTime(50.f);
-
-		if (timebar1->GetCurrentRectSize().x >= timebar1->GetRectSize().x)
-		{
-			timebar1->SetRectSize(timebar1->GetRectSize());
-		}
 	}
 	
 	/////////////////////////////player1/////////////////////////////////////
@@ -220,13 +219,13 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT, tree1);
 		player1->UpdatePlayerSide(Sides::LEFT);
-		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 200.f, 650.f });
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f - 150.f, 580.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::A) && !(int)player1->IsDead())
@@ -244,14 +243,13 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree1->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT, tree1);
 		player1->UpdatePlayerSide(Sides::RIGHT);
-		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 200.f, 650.f });
+		player1->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.3f + 150.f, 580.f });
 		uiScore1->AddScore(10.f);
 		player1->SetAxeActive(true);
 
-		sound.resetBuffer();
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::D) && !(int)player1->IsDead())
@@ -263,23 +261,22 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (player1->GetPlayerSide() == tree1->GetFirstBranch() && !(int)player1->IsDead()) // player1 사망 상태 - collide with branch
 	{
 		player1->SetDead();
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		player1->SetPosition({ player1->GetPosition().x, 630 });
+		timebar1->SetRectSize({ 0, timebar1->GetCurrentRectSize().y });
 
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
-		sound.play();
+		deathSound.resetBuffer();
+		deathSound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		deathSound.play();
 	}
 	if (timebar1->GetCurrentRectSize().x <= 0 && !(int)player1->IsDead())				// player1 사망 상태 - timeover
 	{
 		player1->SetDead();
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+		player1->SetPosition({ player1->GetPosition().x, 630 });
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
-		sound.play();
+		outOfTimeSound.resetBuffer();
+		outOfTimeSound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		outOfTimeSound.play();
 	}
 
 	////////////////////////player2///////////////////////////////
@@ -293,13 +290,13 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::LEFT);
 		PlayEffectLog(Sides::LEFT, tree2);
 		player2->UpdatePlayerSide(Sides::LEFT);
-		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 200.f, 650.f });
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f - 150.f, 580.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Left) && !(int)player2->IsDead())
@@ -317,14 +314,13 @@ void SceneGameDuo::UpdateGame(float dt)
 		tree2->Chop(Sides::RIGHT);
 		PlayEffectLog(Sides::RIGHT, tree2);
 		player2->UpdatePlayerSide(Sides::RIGHT);
-		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 200.f, 650.f });
+		player2->SetPosition({ FRAMEWORK.GetWindowSize().x * 0.7f + 150.f, 580.f });
 		uiScore2->AddScore(10.f);
 		player2->SetAxeActive(true);
 
-		sound.resetBuffer();
-
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
-		sound.play();
+		chopSound.resetBuffer();
+		chopSound.setBuffer(*SOUND_MANAGER.GetResource("sound/chop.wav"));
+		chopSound.play();
 	}
 
 	if (InputManager::GetKeyUp(sf::Keyboard::Right) && !(int)player2->IsDead())
@@ -335,44 +331,32 @@ void SceneGameDuo::UpdateGame(float dt)
 	if (player2->GetPlayerSide() == tree2->GetFirstBranch() && !(int)player2->IsDead()) // player2 사망 상태 - collide with branch
 	{
 		player2->SetDead();
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
-		sound.play();
+		
+		player2->SetPosition({ player2->GetPosition().x, 630 });
+		timebar2->SetRectSize({ 0, timebar2->GetCurrentRectSize().y});
+
+		deathSound.resetBuffer();
+		deathSound.setBuffer(*SOUND_MANAGER.GetResource("sound/death.wav"));
+		deathSound.play();
 	}
 	if (timebar2->GetCurrentRectSize().x <= 0 && !(int)player2->IsDead())				// player2 사망 상태 - timeover
 	{
 		player2->SetDead();
-		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
-		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
-		sound.resetBuffer();
-		sound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
-		sound.play();
+		player2->SetPosition({ player2->GetPosition().x, 630 });
+
+		outOfTimeSound.resetBuffer();
+		outOfTimeSound.setBuffer(*SOUND_MANAGER.GetResource("sound/out_of_time.wav"));
+		outOfTimeSound.play();
 	}
 
-
-	// 4가지 case 모두 필요
-	/*
-	player1 player2
-	1		1
-	1		0	// player1 사운드 끄기
-	0		1	// player2 사운드 켜기
-	0		0	// 초기 상태
-	*/
 	if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::DEAD)
 	{
 		SetStatus(Status::GameOver);
+		uiIntro->SetPosition({ 1920.f / 2, 1080.f * 0.2f });
+		uiScore1->SetPosition({ 1920.f / 3, 1080.f / 2 - 200 });
+		uiScore2->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
 		SCENEMANAGER.StopBGM();
 	}
-	/*else if (player1->IsDead() == PlayerState::DEAD && player2->IsDead() == PlayerState::ALIVE)
-	{
-		SetStatus(Status::GameOver);
-	}
-	else if (player1->IsDead() == PlayerState::ALIVE && player2->IsDead() == PlayerState::DEAD)
-	{
-		SetStatus(Status::GameOver);
-	}*/
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
@@ -413,6 +397,7 @@ void SceneGameDuo::UpdateGameOver(float dt)
 
 	if (InputManager::GetKeyDown(sf::Keyboard::Enter))
 	{
+		Init();
 		SetStatus(Status::Game);
 		for (GameObject* obj : gameObjects)
 		{

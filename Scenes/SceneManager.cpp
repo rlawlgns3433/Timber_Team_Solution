@@ -34,8 +34,8 @@ void SceneManager::Release()
 {
 	for (auto scene : scenes)
 	{
-		scene->Release(); // 씬 모든 내용을 할당 해제
-		delete scene; // 씬 삭제
+		scene->Release();
+		delete scene;
 	}
 	scenes.clear();
 }
@@ -65,30 +65,31 @@ void SceneManager::SetMode(Mod mod)
 void SceneManager::LoadAllResources()
 {
 	// Texture
-	TEXTURE_MANAGER.Load("graphics/background.png");
-	TEXTURE_MANAGER.Load("graphics/cloud.png");
-	TEXTURE_MANAGER.Load("graphics/bee.png");
-	TEXTURE_MANAGER.Load("graphics/tree.png");
-	TEXTURE_MANAGER.Load("graphics/branch.png");
-	TEXTURE_MANAGER.Load("graphics/log.png");
-	TEXTURE_MANAGER.Load("graphics/player.png");
-	TEXTURE_MANAGER.Load("graphics/player2.png");
-	TEXTURE_MANAGER.Load("graphics/rip.png");
-	TEXTURE_MANAGER.Load("graphics/axe.png");
+	TEXTURE_MANAGER.Load(backgroundId);
+	TEXTURE_MANAGER.Load(cloudId);
+	TEXTURE_MANAGER.Load(beeId);
+	TEXTURE_MANAGER.Load(treeId);
+	TEXTURE_MANAGER.Load(branchId);
+	TEXTURE_MANAGER.Load(logId);
+	TEXTURE_MANAGER.Load(playerId);
+	TEXTURE_MANAGER.Load(player2Id);
+	TEXTURE_MANAGER.Load(ripId);
+	TEXTURE_MANAGER.Load(axeId);
 
 	// Font
-	FONT_MANAGER.Load("fonts/KOMIKAP_.ttf");
+	FONT_MANAGER.Load(fontId);
 
 	// Sound, Music
-	SOUND_MANAGER.Load("sound/chop.wav");
-	SOUND_MANAGER.Load("sound/death.wav");
-	SOUND_MANAGER.Load("sound/out_of_time.wav");
+	SOUND_MANAGER.Load(chopId);
+	SOUND_MANAGER.Load(deathId);
+	SOUND_MANAGER.Load(outOfTimeId);
 
 	bgm.openFromFile(bgmId);
 }
 
 void SceneManager::PlayBGM()
 {
+	bgm.setLoop(true);
 	bgm.play();
 }
 
