@@ -11,7 +11,6 @@ protected:
 	TextGo* num1ForSinglePlay;
 	TextGo* num2ForDuoPlay;
 
-
 public:
 	SceneSelectMode(SceneIDs id);
 	virtual ~SceneSelectMode();
