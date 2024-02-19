@@ -29,11 +29,8 @@ void BackgroundBeeGo::Reset()
 void BackgroundBeeGo::ReDirection()
 {
 	float angle = Utils::GetRandomAngle();
-	std::cout << angle << std::endl;
-
 	rotation.rotate(angle);
 	direction = rotation * direction;
-	std::cout << direction.x << " : " << direction.y << std::endl;
 
 	beeChangeTime = time + beeChangeDuration;
 }
