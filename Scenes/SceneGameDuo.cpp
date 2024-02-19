@@ -130,6 +130,7 @@ void SceneGameDuo::Exit()
 
 	for (auto& effectLog : useEffectList)
 	{
+		RemoveGameObject(effectLog);
 		effectLog->SetActive(false);
 		unuseEffectList.push_back(effectLog);
 	}
@@ -429,6 +430,7 @@ void SceneGameDuo::UpdateGameOver(float dt)
 
 		for (auto& effectLog : useEffectList)
 		{
+			RemoveGameObject(effectLog);
 			effectLog->SetActive(false);
 			unuseEffectList.push_back(effectLog);
 		}
